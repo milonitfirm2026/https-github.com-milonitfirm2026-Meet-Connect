@@ -82,6 +82,12 @@
       70%, 100% { transform: scale(1.8); opacity: 0; }
     }
     .soft-scrollbar { scrollbar-color: #3b303e #141118; scrollbar-width: thin; }
+    .member-view[hidden], #memberApp[hidden] { display: none !important; }
+    .member-nav-button[aria-current="page"] {
+      color: #fff;
+      border-color: rgba(255, 62, 127, .3);
+      background: rgba(255, 62, 127, .1);
+    }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
@@ -90,7 +96,7 @@
 
 <body class="antialiased selection:bg-[#FF3E7F] selection:text-white">
   <!-- 2. Header -->
-  <header class="sticky top-0 z-40 w-full border-b border-white/[0.05] bg-[#09080B]/85 backdrop-blur-xl">
+  <header id="publicHeader" class="sticky top-0 z-40 w-full border-b border-white/[0.05] bg-[#09080B]/85 backdrop-blur-xl">
     <div class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
       <a href="#top" class="group flex shrink-0 items-center gap-3" aria-label="Meet & Connect home">
         <span class="flex h-10 w-10 items-center justify-center rounded-xl border border-[#FF3E7F]/30 bg-[#1A1218] transition-colors group-hover:border-[#FF3E7F]">
@@ -140,7 +146,7 @@
     </nav>
   </header>
 
-  <main id="top" class="ambient">
+  <main id="publicLanding" class="ambient">
     <!-- 3. Hero -->
     <section class="mx-auto max-w-7xl px-4 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8 lg:pt-16">
       <div class="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
@@ -432,7 +438,7 @@
   </main>
 
   <!-- 13. Footer -->
-  <footer class="mt-10 border-t border-white/[0.06] bg-[#070609]">
+  <footer id="publicFooter" class="mt-10 border-t border-white/[0.06] bg-[#070609]">
     <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div class="grid grid-cols-2 gap-9 md:grid-cols-3 lg:grid-cols-6">
         <div class="col-span-2 space-y-3 lg:col-span-2">
@@ -467,6 +473,183 @@
       <p class="mt-6 text-center text-[10px] text-zinc-600">© 2026 Meet &amp; Connect. Product concept preview.</p>
     </div>
   </footer>
+
+  <div id="memberApp" class="min-h-screen bg-[#09080B] text-zinc-100" hidden>
+    <div class="mx-auto flex min-h-screen max-w-[1600px]">
+      <aside id="memberSidebar" class="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-white/[0.06] bg-[#0D0B10] p-5 lg:block">
+        <a href="#" class="flex items-center gap-3" aria-label="Meet & Connect dashboard">
+          <span class="flex h-10 w-10 items-center justify-center rounded-xl border border-[#FF3E7F]/30 bg-[#1A1218] text-xl text-[#FF3E7F]">♡</span>
+          <span class="text-sm font-bold text-white">Meet <span class="text-[#FF3E7F]">&amp;</span> Connect</span>
+        </a>
+        <p class="mt-8 px-3 text-[10px] font-bold uppercase tracking-[.18em] text-zinc-500">Member space</p>
+        <nav class="mt-3 space-y-1" aria-label="Member navigation">
+          <button type="button" class="member-nav-button flex w-full items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.04] hover:text-white" data-member-target="dashboard" aria-current="page"><span aria-hidden="true">⌂</span>Dashboard</button>
+          <button type="button" class="member-nav-button flex w-full items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.04] hover:text-white" data-member-target="discover"><span aria-hidden="true">⌕</span>Discover People</button>
+          <button type="button" class="member-nav-button flex w-full items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.04] hover:text-white" data-member-target="dating"><span aria-hidden="true">♡</span>Dating</button>
+          <button type="button" class="member-nav-button flex w-full items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.04] hover:text-white" data-member-target="profile"><span aria-hidden="true">◉</span>My Profile</button>
+          <button type="button" class="member-nav-button flex w-full items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.04] hover:text-white" data-member-target="messages"><span aria-hidden="true">✉</span>Messages</button>
+          <button type="button" class="member-nav-button flex w-full items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.04] hover:text-white" data-member-target="live"><span aria-hidden="true">◉</span>Live</button>
+          <button type="button" class="member-nav-button flex w-full items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.04] hover:text-white" data-member-target="premium"><span aria-hidden="true">✧</span>Premium</button>
+          <button type="button" class="member-nav-button flex w-full items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.04] hover:text-white" data-member-target="notifications"><span aria-hidden="true">♧</span>Notifications</button>
+          <button type="button" class="member-nav-button flex w-full items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.04] hover:text-white" data-member-target="settings"><span aria-hidden="true">⚙</span>Settings</button>
+        </nav>
+        <div class="absolute bottom-5 left-5 right-5 border-t border-white/[0.07] pt-4">
+          <button type="button" class="member-logout flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-rose-400/10 hover:text-rose-200"><span aria-hidden="true">↪</span>Log out</button>
+        </div>
+      </aside>
+
+      <div class="min-w-0 flex-1">
+        <header class="sticky top-0 z-30 border-b border-white/[0.06] bg-[#09080B]/90 backdrop-blur-xl">
+          <div class="flex h-[72px] items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-3">
+              <button id="memberMobileNavButton" type="button" class="rounded-xl border border-white/10 bg-[#141118] p-2 text-zinc-300 lg:hidden" aria-label="Open member navigation" aria-expanded="false" aria-controls="memberMobileNav">☰</button>
+              <div>
+                <p class="text-xs text-zinc-500">Meet &amp; Connect</p>
+                <p id="memberPageTitle" class="text-sm font-semibold text-white">Dashboard</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <button type="button" class="member-nav-button hidden rounded-xl border border-white/10 px-3 py-2 text-xs text-zinc-300 hover:bg-white/5 sm:inline-flex" data-member-target="notifications">Notifications</button>
+              <button type="button" class="member-nav-button flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] p-1.5 pr-3 text-xs text-white" data-member-target="profile" aria-label="Open my profile">
+                <img id="headerAvatar" class="hidden h-8 w-8 rounded-full object-cover" alt="" />
+                <span id="headerAvatarInitials" class="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF3E7F]/15 font-bold text-[#FF8CA8]">M</span>
+                <span id="headerDisplayName" class="max-w-28 truncate">Member</span>
+              </button>
+            </div>
+          </div>
+          <nav id="memberMobileNav" class="hidden border-t border-white/[0.06] bg-[#100E13] p-3 lg:hidden" aria-label="Mobile member navigation">
+            <div class="grid grid-cols-2 gap-1 sm:grid-cols-3">
+              <button type="button" class="member-nav-button rounded-lg border border-transparent px-3 py-2.5 text-left text-xs text-zinc-300 hover:bg-white/5" data-member-target="dashboard">Dashboard</button>
+              <button type="button" class="member-nav-button rounded-lg border border-transparent px-3 py-2.5 text-left text-xs text-zinc-300 hover:bg-white/5" data-member-target="discover">Discover People</button>
+              <button type="button" class="member-nav-button rounded-lg border border-transparent px-3 py-2.5 text-left text-xs text-zinc-300 hover:bg-white/5" data-member-target="dating">Dating</button>
+              <button type="button" class="member-nav-button rounded-lg border border-transparent px-3 py-2.5 text-left text-xs text-zinc-300 hover:bg-white/5" data-member-target="profile">My Profile</button>
+              <button type="button" class="member-nav-button rounded-lg border border-transparent px-3 py-2.5 text-left text-xs text-zinc-300 hover:bg-white/5" data-member-target="messages">Messages</button>
+              <button type="button" class="member-nav-button rounded-lg border border-transparent px-3 py-2.5 text-left text-xs text-zinc-300 hover:bg-white/5" data-member-target="live">Live</button>
+              <button type="button" class="member-nav-button rounded-lg border border-transparent px-3 py-2.5 text-left text-xs text-zinc-300 hover:bg-white/5" data-member-target="premium">Premium</button>
+              <button type="button" class="member-nav-button rounded-lg border border-transparent px-3 py-2.5 text-left text-xs text-zinc-300 hover:bg-white/5" data-member-target="notifications">Notifications</button>
+              <button type="button" class="member-nav-button rounded-lg border border-transparent px-3 py-2.5 text-left text-xs text-zinc-300 hover:bg-white/5" data-member-target="settings">Settings</button>
+              <button type="button" class="member-logout rounded-lg px-3 py-2.5 text-left text-xs text-rose-200 hover:bg-rose-400/10">Log out</button>
+            </div>
+          </nav>
+        </header>
+
+        <main class="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+          <div id="memberStatus" class="mb-5 hidden rounded-2xl border border-amber-300/20 bg-amber-300/[0.07] p-4 text-sm text-amber-100" role="status" aria-live="polite"></div>
+          <div id="memberLoading" class="surface-card rounded-3xl p-8 text-sm text-zinc-300" role="status">Loading your member space…</div>
+
+          <section id="memberView-dashboard" class="member-view hidden space-y-6" aria-labelledby="dashboardHeading" hidden>
+            <div class="relative overflow-hidden rounded-3xl border border-[#FF3E7F]/20 bg-gradient-to-br from-[#24131E] via-[#17121B] to-[#100E13] p-6 sm:p-9">
+              <div class="pointer-events-none absolute -right-12 -top-20 h-64 w-64 rounded-full bg-[#FF3E7F]/10 blur-3xl"></div>
+              <div class="relative flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-[.2em] text-[#FF8CA8]">Your member space</p>
+                  <h1 id="dashboardHeading" class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">Welcome back, <span id="welcomeDisplayName">Member</span></h1>
+                  <p class="mt-3 max-w-xl text-sm leading-6 text-zinc-300">A thoughtful space to meet people and make meaningful connections.</p>
+                  <button type="button" class="member-nav-button mt-6 rounded-xl bg-pink-gradient px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-[#FF3E7F]/20" data-member-target="discover">Discover people</button>
+                </div>
+                <div class="flex items-center gap-4 rounded-2xl border border-white/10 bg-black/20 p-4 sm:min-w-64">
+                  <div class="h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-[#FF3E7F]/10">
+                    <img id="dashboardAvatar" class="hidden h-full w-full object-cover" alt="Your profile" />
+                    <span id="dashboardAvatarInitials" class="flex h-full w-full items-center justify-center text-xl font-bold text-[#FF8CA8]">M</span>
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <p class="text-xs text-zinc-400">Profile completion</p>
+                    <p id="profileCompletionLabel" class="mt-1 text-lg font-bold text-white">0%</p>
+                    <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10"><div id="profileCompletionBar" class="h-full rounded-full bg-pink-gradient transition-all" style="width: 0%"></div></div>
+                    <button type="button" class="member-nav-button mt-2 text-xs font-semibold text-[#FF8CA8] hover:text-white" data-member-target="profile">Complete your profile →</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid gap-6 xl:grid-cols-[1.4fr_.8fr]">
+              <section class="surface-card rounded-3xl p-5 sm:p-6">
+                <div class="flex items-center justify-between gap-3">
+                  <div><p class="text-xs font-semibold uppercase tracking-[.16em] text-[#FF8CA8]">A good place to start</p><h2 class="mt-1 text-lg font-bold text-white">People to discover</h2></div>
+                  <button type="button" class="member-nav-button text-xs font-semibold text-zinc-300 hover:text-white" data-member-target="discover">See all →</button>
+                </div>
+                <div id="dashboardDiscoverCards" class="mt-5 grid gap-3 sm:grid-cols-2"></div>
+                <p id="dashboardDiscoverEmpty" class="mt-5 hidden rounded-xl border border-white/[0.07] bg-black/20 p-4 text-sm text-zinc-400">New member profiles will appear here as people complete onboarding.</p>
+              </section>
+              <section class="surface-card rounded-3xl p-5 sm:p-6">
+                <p class="text-xs font-semibold uppercase tracking-[.16em] text-[#FF8CA8]">Your shortcuts</p>
+                <h2 class="mt-1 text-lg font-bold text-white">Quick access</h2>
+                <div class="mt-5 grid grid-cols-2 gap-3">
+                  <button type="button" class="member-nav-button rounded-2xl border border-white/[0.08] bg-black/20 p-4 text-left hover:border-[#FF3E7F]/30" data-member-target="messages"><span class="text-lg text-[#FF8CA8]">✉</span><span class="mt-2 block text-sm font-semibold text-white">Messages</span><span class="mt-1 block text-[11px] text-zinc-500">Preview</span></button>
+                  <button type="button" class="member-nav-button rounded-2xl border border-white/[0.08] bg-black/20 p-4 text-left hover:border-[#FF3E7F]/30" data-member-target="discover"><span class="text-lg text-[#FF8CA8]">⌕</span><span class="mt-2 block text-sm font-semibold text-white">Discover</span><span class="mt-1 block text-[11px] text-zinc-500">Meet members</span></button>
+                  <button type="button" class="member-nav-button col-span-2 rounded-2xl border border-white/[0.08] bg-black/20 p-4 text-left hover:border-[#FF3E7F]/30" data-member-target="profile"><span class="text-lg text-[#FF8CA8]">◉</span><span class="ml-2 text-sm font-semibold text-white">My Profile</span><span class="ml-2 text-[11px] text-zinc-500">Edit your details</span></button>
+                </div>
+                <div class="mt-5 border-t border-white/[0.07] pt-4">
+                  <p class="text-xs font-semibold text-white">Recent activity</p>
+                  <p id="recentActivityText" class="mt-2 text-xs leading-5 text-zinc-400">Your activity will appear here as you use Meet &amp; Connect.</p>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <section id="memberView-discover" class="member-view hidden space-y-5" aria-labelledby="discoverHeading" hidden>
+            <div><p class="text-xs font-semibold uppercase tracking-[.16em] text-[#FF8CA8]">Find your people</p><h1 id="discoverHeading" class="mt-2 text-3xl font-bold text-white">Discover People</h1><p class="mt-2 text-sm text-zinc-400">Explore member profiles and find new connections.</p></div>
+            <div id="discoverPeopleGrid" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"></div>
+            <p id="discoverPeopleEmpty" class="hidden rounded-2xl border border-white/[0.07] bg-[#141118] p-6 text-sm text-zinc-400">There are no completed member profiles to show yet. Check back soon.</p>
+          </section>
+
+          <section id="memberView-dating" class="member-view hidden" aria-labelledby="datingHeading" hidden>
+            <div class="surface-card rounded-3xl p-6 sm:p-9"><span class="rounded-full border border-[#FF3E7F]/20 bg-[#FF3E7F]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#FF8CA8]">Preview</span><h1 id="datingHeading" class="mt-5 text-3xl font-bold text-white">Dating</h1><p class="mt-3 max-w-2xl text-sm leading-6 text-zinc-400">Dating preferences and matching are coming soon. This preview does not create matches or send introductions.</p><button type="button" class="member-nav-button mt-6 rounded-xl border border-white/10 px-4 py-2.5 text-sm text-white hover:bg-white/5" data-member-target="discover">Browse member profiles</button></div>
+          </section>
+
+          <section id="memberView-profile" class="member-view hidden space-y-5" aria-labelledby="profileHeading" hidden>
+            <div><p class="text-xs font-semibold uppercase tracking-[.16em] text-[#FF8CA8]">Tell your story</p><h1 id="profileHeading" class="mt-2 text-3xl font-bold text-white">My Profile</h1><p class="mt-2 text-sm text-zinc-400">Your full date of birth and first/last name are private. Other members see your display name and profile details.</p></div>
+            <div id="profileMessage" class="hidden rounded-xl border p-4 text-sm" role="status" aria-live="polite"></div>
+            <form id="profileForm" class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_300px]">
+              <div class="surface-card space-y-5 rounded-3xl p-5 sm:p-7">
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <label class="block text-xs font-medium text-zinc-300">Display name<input id="profileDisplayName" name="display_name" type="text" required maxlength="50" autocomplete="nickname" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+                  <label class="block text-xs font-medium text-zinc-300">Account type<select id="profileAccountType" name="account_type" required class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]"><option value="user">User</option><option value="creator">Creator</option></select></label>
+                  <label class="block text-xs font-medium text-zinc-300">First name <span class="text-zinc-500">(private)</span><input id="profileFirstName" name="first_name" type="text" required maxlength="80" autocomplete="given-name" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+                  <label class="block text-xs font-medium text-zinc-300">Last name <span class="text-zinc-500">(private)</span><input id="profileLastName" name="last_name" type="text" required maxlength="80" autocomplete="family-name" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+                  <label class="block text-xs font-medium text-zinc-300">Date of birth <span class="text-zinc-500">(private)</span><input id="profileDateOfBirth" name="date_of_birth" type="date" required autocomplete="bday" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+                  <div>
+                    <label for="profileCountry" class="block text-xs font-medium text-zinc-300">Country</label>
+                    <div id="profileCountryPicker" class="relative mt-1.5">
+                      <input id="profileCountry" name="country" type="text" required autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="profileCountryOptions" placeholder="Search countries..." class="w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" />
+                      <div id="profileCountryOptions" role="listbox" aria-label="Countries" class="absolute z-30 mt-1 hidden max-h-56 w-full overflow-y-auto rounded-xl border border-white/10 bg-[#100E13] p-1 shadow-xl"></div>
+                    </div>
+                  </div>
+                  <label class="block text-xs font-medium text-zinc-300">City<input id="profileCity" name="city" type="text" maxlength="100" autocomplete="address-level2" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+                  <label class="block text-xs font-medium text-zinc-300">Gender<select id="profileGender" name="gender" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]"><option value="">Prefer not to say</option><option value="Male">Male</option><option value="Female">Female</option><option value="Prefer not to say">Prefer not to say</option></select></label>
+                </div>
+                <label class="block text-xs font-medium text-zinc-300">Short biography<textarea id="profileBio" name="bio" rows="4" maxlength="300" placeholder="A little about you..." class="mt-1.5 w-full resize-y rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]"></textarea><span class="mt-1 block text-right text-[10px] text-zinc-500">Up to 300 characters</span></label>
+                <label class="block text-xs font-medium text-zinc-300">Interests and hobbies<input id="profileInterests" name="interests" type="text" maxlength="500" placeholder="Music, hiking, cooking" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /><span class="mt-1 block text-[10px] text-zinc-500">Separate interests with commas (up to 20).</span></label>
+                <div class="flex flex-wrap gap-3 border-t border-white/[0.07] pt-5">
+                  <button id="profileSaveButton" type="submit" class="rounded-xl bg-pink-gradient px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-[#FF3E7F]/15">Save profile</button>
+                  <button type="button" class="member-nav-button rounded-xl border border-white/10 px-5 py-3 text-sm text-zinc-300 hover:bg-white/5" data-member-target="dashboard">Back to dashboard</button>
+                </div>
+              </div>
+              <aside class="surface-card h-fit rounded-3xl p-5 sm:p-6">
+                <h2 class="text-sm font-bold text-white">Profile photo</h2>
+                <p class="mt-1 text-xs leading-5 text-zinc-400">JPG, PNG, or WebP. Maximum 5 MB. Only authenticated members can view your photo.</p>
+                <div class="mx-auto mt-5 h-40 w-40 overflow-hidden rounded-full border border-white/10 bg-[#FF3E7F]/10">
+                  <img id="profilePhotoPreview" class="hidden h-full w-full object-cover" alt="Profile photo preview" />
+                  <span id="profilePhotoInitials" class="flex h-full w-full items-center justify-center text-4xl font-bold text-[#FF8CA8]">M</span>
+                </div>
+                <label class="mt-5 block cursor-pointer rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-center text-xs font-semibold text-white transition hover:border-[#FF3E7F]/30">
+                  Choose photo<input id="profilePhoto" type="file" accept="image/jpeg,image/png,image/webp" class="sr-only" />
+                </label>
+                <button id="removeProfilePhoto" type="button" class="mt-2 hidden w-full rounded-xl px-4 py-2 text-xs text-zinc-400 hover:bg-white/5 hover:text-white">Remove current photo</button>
+                <p id="profilePhotoHelp" class="mt-3 text-center text-[10px] text-zinc-500">Your image is uploaded to your private account folder.</p>
+              </aside>
+            </form>
+          </section>
+
+          <section id="memberView-messages" class="member-view hidden" aria-labelledby="messagesHeading" hidden><div class="surface-card rounded-3xl p-6 sm:p-9"><span class="rounded-full border border-[#FF3E7F]/20 bg-[#FF3E7F]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#FF8CA8]">Coming soon</span><h1 id="messagesHeading" class="mt-5 text-3xl font-bold text-white">Messages</h1><p class="mt-3 max-w-2xl text-sm leading-6 text-zinc-400">Messaging is a product preview and is not connected. You cannot send or receive messages yet.</p></div></section>
+          <section id="memberView-live" class="member-view hidden" aria-labelledby="liveHeading" hidden><div class="surface-card rounded-3xl p-6 sm:p-9"><span class="rounded-full border border-[#FF3E7F]/20 bg-[#FF3E7F]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#FF8CA8]">Coming soon</span><h1 id="liveHeading" class="mt-5 text-3xl font-bold text-white">Live</h1><p class="mt-3 max-w-2xl text-sm leading-6 text-zinc-400">Live streaming and video calls are not available in this preview.</p></div></section>
+          <section id="memberView-premium" class="member-view hidden" aria-labelledby="premiumHeading" hidden><div class="surface-card rounded-3xl p-6 sm:p-9"><span class="rounded-full border border-[#FF3E7F]/20 bg-[#FF3E7F]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#FF8CA8]">Coming soon</span><h1 id="premiumHeading" class="mt-5 text-3xl font-bold text-white">Premium</h1><p class="mt-3 max-w-2xl text-sm leading-6 text-zinc-400">Premium plans and payments are not active. No subscription or payment will be taken.</p></div></section>
+          <section id="memberView-notifications" class="member-view hidden" aria-labelledby="notificationsHeading" hidden><div class="surface-card rounded-3xl p-6 sm:p-9"><span class="rounded-full border border-[#FF3E7F]/20 bg-[#FF3E7F]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#FF8CA8]">Preview</span><h1 id="notificationsHeading" class="mt-5 text-3xl font-bold text-white">Notifications</h1><p class="mt-3 max-w-2xl text-sm leading-6 text-zinc-400">You’re all caught up. Activity notifications will appear here when that feature is available.</p></div></section>
+          <section id="memberView-settings" class="member-view hidden" aria-labelledby="settingsHeading" hidden><div class="surface-card max-w-2xl rounded-3xl p-6 sm:p-9"><span class="rounded-full border border-[#FF3E7F]/20 bg-[#FF3E7F]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#FF8CA8]">Basic settings</span><h1 id="settingsHeading" class="mt-5 text-3xl font-bold text-white">Settings</h1><p class="mt-3 text-sm leading-6 text-zinc-400">Account and privacy controls will be expanded in a future update.</p><div class="mt-6 border-t border-white/[0.07] pt-5"><p id="settingsEmail" class="break-all text-sm text-zinc-300"></p><button type="button" class="member-logout mt-4 rounded-xl border border-rose-300/20 px-4 py-2.5 text-sm text-rose-200 hover:bg-rose-400/10">Log out</button></div></div></section>
+        </main>
+      </div>
+    </div>
+  </div>
 
   <!-- 14. Login modal -->
   <div id="loginModal" class="modal fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto p-4 modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
@@ -540,10 +723,22 @@
   <div id="toast" class="pointer-events-none fixed bottom-5 left-1/2 z-[70] hidden -translate-x-1/2 rounded-xl border border-white/10 bg-[#201923] px-4 py-3 text-center text-xs text-white shadow-2xl" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2/dist/umd/supabase.js" integrity="sha384-A97u3Qnt9GZHURO9YJZRe7VQgGUeFzcv6I1oIGnUTxQrCxnpQMwR0/G8F2zt9abZ" crossorigin="anonymous"></script>
   <script>
-    const supabaseClient = window.supabase?.createClient(
-      'https://glyrytmkerjxdnaboday.supabase.co',
-      'sb_publishable__CDztMbHsyrmP79buCz5OQ_saT8Pkdq'
-    ) ?? null;
+    const supabaseClient = typeof window.supabase?.createClient === 'function'
+      ? window.supabase.createClient(
+        'https://glyrytmkerjxdnaboday.supabase.co',
+        'sb_publishable__CDztMbHsyrmP79buCz5OQ_saT8Pkdq'
+      )
+      : null;
+
+    function getAuthMethodError(method) {
+      if (!supabaseClient) {
+        return 'Supabase could not be initialized. Check your connection and reload the page.';
+      }
+      if (typeof supabaseClient.auth?.[method] !== 'function') {
+        return 'The Supabase authentication library did not load correctly. Reload the page and try again.';
+      }
+      return '';
+    }
 
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -652,9 +847,6 @@
       return today.getFullYear() - year - (birthdayHasPassed ? 0 : 1);
     }
 
-    const signupCountryPicker = document.getElementById('signupCountryPicker');
-    const signupCountry = document.getElementById('signupCountry');
-    const signupCountryOptions = document.getElementById('signupCountryOptions');
     const countryGroups = [
       { name: 'North America', countries: ['Canada', 'Mexico', 'United States'] },
       { name: 'Central America', countries: ['Belize', 'Costa Rica', 'El Salvador', 'Guatemala', 'Honduras', 'Nicaragua', 'Panama'] },
@@ -666,134 +858,150 @@
       { name: 'Europe - Southern', countries: ['Albania', 'Andorra', 'Bosnia and Herzegovina', 'Croatia', 'Cyprus', 'Greece', 'Italy', 'Kosovo', 'Malta', 'Montenegro', 'North Macedonia', 'Portugal', 'San Marino', 'Serbia', 'Slovenia', 'Spain', 'Vatican City'] },
       { name: 'Europe - Transcontinental', countries: ['Armenia', 'Azerbaijan', 'Georgia', 'Kazakhstan', 'Türkiye'] }
     ];
-    let activeCountryIndex = -1;
+    function initializeCountryPicker(inputId, pickerId, optionsId) {
+      const picker = document.getElementById(pickerId);
+      const input = document.getElementById(inputId);
+      const optionsContainer = document.getElementById(optionsId);
+      let activeIndex = -1;
 
-    function getCountryOptions() {
-      return [...signupCountryOptions.querySelectorAll('[role="option"]')];
-    }
+      function getOptions() {
+        return [...optionsContainer.querySelectorAll('[role="option"]')];
+      }
 
-    function closeCountryOptions() {
-      signupCountryOptions.classList.add('hidden');
-      signupCountry.setAttribute('aria-expanded', 'false');
-      signupCountry.removeAttribute('aria-activedescendant');
-      activeCountryIndex = -1;
-    }
+      function closeOptions() {
+        optionsContainer.classList.add('hidden');
+        input.setAttribute('aria-expanded', 'false');
+        input.removeAttribute('aria-activedescendant');
+        activeIndex = -1;
+      }
 
-    function openCountryOptions() {
-      const selectedCountry = signupCountry.dataset.selectedCountry === signupCountry.value;
-      renderCountryOptions(selectedCountry ? '' : signupCountry.value);
-      signupCountryOptions.classList.remove('hidden');
-      signupCountry.setAttribute('aria-expanded', 'true');
-    }
+      function renderOptions(search = '') {
+        const query = search.trim().toLocaleLowerCase();
+        optionsContainer.replaceChildren();
+        activeIndex = -1;
+        let optionIndex = 0;
+        let europeHeadingRendered = false;
 
-    function renderCountryOptions(search = '') {
-      const query = search.trim().toLocaleLowerCase();
-      signupCountryOptions.replaceChildren();
-      activeCountryIndex = -1;
-      let optionIndex = 0;
-      let europeHeadingRendered = false;
+        countryGroups.forEach(group => {
+          const matches = group.countries.filter(country => country.toLocaleLowerCase().includes(query));
+          if (!matches.length) return;
 
-      countryGroups.forEach(group => {
-        const matches = group.countries.filter(country => country.toLocaleLowerCase().includes(query));
-        if (!matches.length) return;
+          const isEuropeGroup = group.name.startsWith('Europe -');
+          if (isEuropeGroup && !europeHeadingRendered) {
+            const europeHeading = document.createElement('div');
+            europeHeading.className = 'px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#FF6B8B]';
+            europeHeading.setAttribute('role', 'presentation');
+            europeHeading.textContent = 'Europe';
+            optionsContainer.append(europeHeading);
+            europeHeadingRendered = true;
+          }
 
-        const isEuropeGroup = group.name.startsWith('Europe -');
-        if (isEuropeGroup && !europeHeadingRendered) {
-          const europeHeading = document.createElement('div');
-          europeHeading.className = 'px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#FF6B8B]';
-          europeHeading.setAttribute('role', 'presentation');
-          europeHeading.textContent = 'Europe';
-          signupCountryOptions.append(europeHeading);
-          europeHeadingRendered = true;
-        }
+          const heading = document.createElement('div');
+          heading.className = isEuropeGroup
+            ? 'px-3 pt-2 pb-1 text-[9px] font-semibold uppercase tracking-wide text-zinc-400'
+            : 'px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#FF6B8B]';
+          heading.setAttribute('role', 'presentation');
+          heading.textContent = isEuropeGroup ? `${group.name.slice(9)} Europe` : group.name;
+          optionsContainer.append(heading);
 
-        const heading = document.createElement('div');
-        heading.className = isEuropeGroup
-          ? 'px-3 pt-2 pb-1 text-[9px] font-semibold uppercase tracking-wide text-zinc-400'
-          : 'px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#FF6B8B]';
-        heading.setAttribute('role', 'presentation');
-        heading.textContent = isEuropeGroup ? `${group.name.slice(9)} Europe` : group.name;
-        signupCountryOptions.append(heading);
-
-        matches.forEach(country => {
-          const option = document.createElement('div');
-          option.id = `signupCountryOption${optionIndex++}`;
-          option.className = 'cursor-pointer rounded-lg px-3 py-2 text-sm text-zinc-200 hover:bg-white/10';
-          option.setAttribute('role', 'option');
-          option.setAttribute('aria-selected', String(signupCountry.dataset.selectedCountry === country));
-          option.textContent = country;
-          option.addEventListener('click', () => {
-            signupCountry.value = country;
-            signupCountry.dataset.selectedCountry = country;
-            signupCountry.setCustomValidity('');
-            closeCountryOptions();
+          matches.forEach(country => {
+            const option = document.createElement('div');
+            option.id = `${input.id}Option${optionIndex++}`;
+            option.className = 'cursor-pointer rounded-lg px-3 py-2 text-sm text-zinc-200 hover:bg-white/10';
+            option.setAttribute('role', 'option');
+            option.setAttribute('aria-selected', String(input.dataset.selectedCountry === country));
+            option.textContent = country;
+            option.addEventListener('click', () => {
+              input.value = country;
+              input.dataset.selectedCountry = country;
+              input.setCustomValidity('');
+              closeOptions();
+            });
+            optionsContainer.append(option);
           });
-          signupCountryOptions.append(option);
         });
+
+        if (!optionsContainer.childElementCount) {
+          const emptyMessage = document.createElement('div');
+          emptyMessage.className = 'px-3 py-2 text-sm text-zinc-400';
+          emptyMessage.setAttribute('role', 'presentation');
+          emptyMessage.textContent = 'No matching countries.';
+          optionsContainer.append(emptyMessage);
+        }
+      }
+
+      function openOptions() {
+        const selectedCountry = input.dataset.selectedCountry === input.value;
+        renderOptions(selectedCountry ? '' : input.value);
+        optionsContainer.classList.remove('hidden');
+        input.setAttribute('aria-expanded', 'true');
+      }
+
+      function setActiveOption(index) {
+        const options = getOptions();
+        if (!options.length) return;
+        activeIndex = ((index % options.length) + options.length) % options.length;
+        options.forEach((option, optionIndex) => {
+          const isActive = optionIndex === activeIndex;
+          option.classList.toggle('bg-white/10', isActive);
+          option.setAttribute('aria-selected', String(isActive));
+        });
+        input.setAttribute('aria-activedescendant', options[activeIndex].id);
+        options[activeIndex].scrollIntoView({ block: 'nearest' });
+      }
+
+      input.addEventListener('focus', openOptions);
+      input.addEventListener('click', () => {
+        if (optionsContainer.classList.contains('hidden')) openOptions();
+      });
+      input.addEventListener('input', () => {
+        delete input.dataset.selectedCountry;
+        input.setCustomValidity('');
+        renderOptions(input.value);
+        optionsContainer.classList.remove('hidden');
+        input.setAttribute('aria-expanded', 'true');
+      });
+      input.addEventListener('keydown', event => {
+        if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+          event.preventDefault();
+          if (optionsContainer.classList.contains('hidden')) openOptions();
+          const direction = event.key === 'ArrowDown' ? 1 : -1;
+          const nextIndex = activeIndex < 0
+            ? (direction > 0 ? 0 : getOptions().length - 1)
+            : activeIndex + direction;
+          setActiveOption(nextIndex);
+        } else if (event.key === 'Enter' && !optionsContainer.classList.contains('hidden')) {
+          event.preventDefault();
+          if (activeIndex >= 0) {
+            getOptions()[activeIndex]?.click();
+          } else if (getOptions().length === 1) {
+            getOptions()[0].click();
+          } else {
+            setActiveOption(0);
+          }
+        } else if (event.key === 'Escape' || event.key === 'Tab') {
+          closeOptions();
+        }
+      });
+      document.addEventListener('click', event => {
+        if (!picker.contains(event.target)) closeOptions();
       });
 
-      if (!signupCountryOptions.childElementCount) {
-        const emptyMessage = document.createElement('div');
-        emptyMessage.className = 'px-3 py-2 text-sm text-zinc-400';
-        emptyMessage.setAttribute('role', 'presentation');
-        emptyMessage.textContent = 'No matching countries.';
-        signupCountryOptions.append(emptyMessage);
-      }
+      return { input, close: closeOptions };
     }
 
-    function setActiveCountryOption(index) {
-      const options = getCountryOptions();
-      if (!options.length) return;
-      activeCountryIndex = ((index % options.length) + options.length) % options.length;
-      options.forEach((option, optionIndex) => {
-        const isActive = optionIndex === activeCountryIndex;
-        option.classList.toggle('bg-white/10', isActive);
-        option.setAttribute('aria-selected', String(isActive));
-      });
-      signupCountry.setAttribute('aria-activedescendant', options[activeCountryIndex].id);
-      options[activeCountryIndex].scrollIntoView({ block: 'nearest' });
-    }
-
-    signupCountry.addEventListener('focus', openCountryOptions);
-    signupCountry.addEventListener('click', () => {
-      if (signupCountryOptions.classList.contains('hidden')) openCountryOptions();
-    });
-    signupCountry.addEventListener('input', () => {
-      delete signupCountry.dataset.selectedCountry;
-      signupCountry.setCustomValidity('');
-      renderCountryOptions(signupCountry.value);
-      signupCountryOptions.classList.remove('hidden');
-      signupCountry.setAttribute('aria-expanded', 'true');
-    });
-    signupCountry.addEventListener('keydown', event => {
-      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-        event.preventDefault();
-        if (signupCountryOptions.classList.contains('hidden')) {
-          openCountryOptions();
-        }
-        const direction = event.key === 'ArrowDown' ? 1 : -1;
-        const nextIndex = activeCountryIndex < 0
-          ? (direction > 0 ? 0 : getCountryOptions().length - 1)
-          : activeCountryIndex + direction;
-        setActiveCountryOption(nextIndex);
-      } else if (event.key === 'Enter' && !signupCountryOptions.classList.contains('hidden')) {
-        event.preventDefault();
-        if (activeCountryIndex >= 0) {
-          getCountryOptions()[activeCountryIndex]?.click();
-        } else if (getCountryOptions().length === 1) {
-          getCountryOptions()[0].click();
-        } else {
-          setActiveCountryOption(0);
-        }
-      } else if (event.key === 'Escape') {
-        closeCountryOptions();
-      } else if (event.key === 'Tab') {
-        closeCountryOptions();
-      }
-    });
-    document.addEventListener('click', event => {
-      if (!signupCountryPicker.contains(event.target)) closeCountryOptions();
-    });
+    const signupCountryPicker = initializeCountryPicker(
+      'signupCountry',
+      'signupCountryPicker',
+      'signupCountryOptions'
+    );
+    const signupCountry = signupCountryPicker.input;
+    const profileCountryPicker = initializeCountryPicker(
+      'profileCountry',
+      'profileCountryPicker',
+      'profileCountryOptions'
+    );
+    const profileCountry = profileCountryPicker.input;
 
     const loginForm = document.getElementById('loginForm');
     const loginMessage = document.getElementById('loginMessage');
@@ -801,8 +1009,9 @@
       event.preventDefault();
       clearAuthMessage(loginMessage);
       if (!loginForm.reportValidity()) return;
-      if (!supabaseClient) {
-        setAuthMessage(loginMessage, 'Authentication could not load. Check your connection and try again.', 'error');
+      const authError = getAuthMethodError('signInWithPassword');
+      if (authError) {
+        setAuthMessage(loginMessage, authError, 'error');
         return;
       }
 
@@ -843,8 +1052,9 @@
         signupForm.elements.date_of_birth.focus();
         return;
       }
-      if (!supabaseClient) {
-        setAuthMessage(signupMessage, 'Authentication could not load. Check your connection and try again.', 'error');
+      const authError = getAuthMethodError('signUp');
+      if (authError) {
+        setAuthMessage(signupMessage, authError, 'error');
         return;
       }
 
@@ -876,7 +1086,7 @@
         signupForm.reset();
         delete signupCountry.dataset.selectedCountry;
         signupCountry.setCustomValidity('');
-        closeCountryOptions();
+        signupCountryPicker.close();
         if (data.session) {
           setAuthMessage(signupMessage, 'Your account was created and you are now signed in.', 'success');
         } else {
@@ -888,6 +1098,678 @@
         setSubmitPending(signupForm, false);
       }
     });
+
+    const memberApp = document.getElementById('memberApp');
+    const memberLoading = document.getElementById('memberLoading');
+    const memberStatus = document.getElementById('memberStatus');
+    const profileForm = document.getElementById('profileForm');
+    const profileMessage = document.getElementById('profileMessage');
+    const profilePhotoInput = document.getElementById('profilePhoto');
+    const profilePhotoPreview = document.getElementById('profilePhotoPreview');
+    const profilePhotoInitials = document.getElementById('profilePhotoInitials');
+    const removeProfilePhotoButton = document.getElementById('removeProfilePhoto');
+    const memberViewTitles = {
+      dashboard: 'Dashboard',
+      discover: 'Discover People',
+      dating: 'Dating',
+      profile: 'My Profile',
+      messages: 'Messages',
+      live: 'Live',
+      premium: 'Premium',
+      notifications: 'Notifications',
+      settings: 'Settings'
+    };
+    const publicPageElements = [
+      document.getElementById('publicHeader'),
+      document.getElementById('publicLanding'),
+      document.getElementById('publicFooter')
+    ];
+    let activeMemberUser = null;
+    let activeMemberProfile = null;
+    let activePrivateProfile = null;
+    let memberProfileComplete = false;
+    let memberAuthVersion = 0;
+    let memberProfileLoadPromise = null;
+    let selectedPhotoFile = null;
+    let removeCurrentPhoto = false;
+    let profileAvatarPath = null;
+    let profilePhotoObjectUrl = null;
+
+    function setMemberStatus(message, isError = false) {
+      memberStatus.textContent = message;
+      memberStatus.className = isError
+        ? 'mb-5 rounded-2xl border border-rose-300/20 bg-rose-300/[0.07] p-4 text-sm text-rose-100'
+        : 'mb-5 rounded-2xl border border-amber-300/20 bg-amber-300/[0.07] p-4 text-sm text-amber-100';
+    }
+
+    function clearMemberStatus() {
+      memberStatus.textContent = '';
+      memberStatus.classList.add('hidden');
+    }
+
+    function setProfileMessage(message, type = 'success') {
+      const classes = {
+        success: 'border-emerald-400/20 bg-emerald-400/10 text-emerald-200',
+        error: 'border-rose-400/20 bg-rose-400/10 text-rose-200',
+        loading: 'border-white/10 bg-white/[0.03] text-zinc-300'
+      };
+      profileMessage.textContent = message;
+      profileMessage.className = `rounded-xl border p-4 text-sm ${classes[type]}`;
+    }
+
+    function clearProfileMessage() {
+      profileMessage.textContent = '';
+      profileMessage.className = 'hidden rounded-xl border p-4 text-sm';
+    }
+
+    function getMemberInitials(name) {
+      const parts = (name || 'Member').trim().split(/\s+/).filter(Boolean);
+      return parts.slice(0, 2).map(part => part[0].toLocaleUpperCase()).join('') || 'M';
+    }
+
+    function updateMemberIdentity(name, photoUrl = '') {
+      const displayName = name || 'Member';
+      const initials = getMemberInitials(displayName);
+      document.getElementById('welcomeDisplayName').textContent = displayName;
+      document.getElementById('headerDisplayName').textContent = displayName;
+      document.getElementById('headerAvatarInitials').textContent = initials;
+      document.getElementById('dashboardAvatarInitials').textContent = initials;
+      document.getElementById('profilePhotoInitials').textContent = initials;
+
+      const avatarTargets = [
+        document.getElementById('headerAvatar'),
+        document.getElementById('dashboardAvatar'),
+        profilePhotoPreview
+      ];
+      avatarTargets.forEach(image => {
+        if (photoUrl) {
+          image.src = photoUrl;
+          image.classList.remove('hidden');
+        } else {
+          image.removeAttribute('src');
+          image.classList.add('hidden');
+        }
+      });
+      document.getElementById('headerAvatarInitials').classList.toggle('hidden', Boolean(photoUrl));
+      document.getElementById('dashboardAvatarInitials').classList.toggle('hidden', Boolean(photoUrl));
+      profilePhotoInitials.classList.toggle('hidden', Boolean(photoUrl));
+      removeProfilePhotoButton.classList.toggle('hidden', !profileAvatarPath && !photoUrl);
+    }
+
+    function updateProfileCompletion(profile, privateProfile) {
+      const fields = [
+        profile?.display_name,
+        privateProfile?.first_name,
+        privateProfile?.last_name,
+        privateProfile?.date_of_birth,
+        profile?.country,
+        profile?.city,
+        profile?.gender,
+        profile?.bio,
+        profile?.interests?.length ? 'yes' : '',
+        profile?.avatar_path,
+        profile?.account_type
+      ];
+      const completion = Math.round(fields.filter(value => String(value || '').trim()).length / fields.length * 100);
+      document.getElementById('profileCompletionLabel').textContent = `${completion}%`;
+      document.getElementById('profileCompletionBar').style.width = `${completion}%`;
+    }
+
+    function isProfileComplete(profile, privateProfile) {
+      return Boolean(
+        profile?.onboarding_complete &&
+        profile.display_name?.trim() &&
+        profile.country?.trim() &&
+        profile.account_type &&
+        privateProfile?.first_name?.trim() &&
+        privateProfile?.last_name?.trim() &&
+        privateProfile?.date_of_birth
+      );
+    }
+
+    function switchMemberView(target) {
+      if (!activeMemberUser) {
+        openModal('loginModal');
+        return;
+      }
+      if (!memberProfileComplete && target !== 'profile') {
+        target = 'profile';
+        setMemberStatus('Please finish setting up your profile before exploring the member area.');
+      }
+
+      document.querySelectorAll('.member-view').forEach(section => {
+        const isActive = section.id === `memberView-${target}`;
+        section.hidden = !isActive;
+        section.classList.toggle('hidden', !isActive);
+      });
+      document.querySelectorAll('.member-nav-button').forEach(button => {
+        if (button.dataset.memberTarget) {
+          if (button.dataset.memberTarget === target) {
+            button.setAttribute('aria-current', 'page');
+          } else {
+            button.removeAttribute('aria-current');
+          }
+        }
+      });
+      document.getElementById('memberPageTitle').textContent = memberViewTitles[target] || 'Dashboard';
+      const mobileNav = document.getElementById('memberMobileNav');
+      const mobileNavButton = document.getElementById('memberMobileNavButton');
+      mobileNav.classList.add('hidden');
+      mobileNavButton.setAttribute('aria-expanded', 'false');
+    }
+
+    function showMemberApp() {
+      publicPageElements.forEach(element => element.classList.add('hidden'));
+      memberApp.hidden = false;
+    }
+
+    function clearMemberData() {
+      activeMemberUser = null;
+      activeMemberProfile = null;
+      activePrivateProfile = null;
+      memberProfileComplete = false;
+      memberProfileLoadPromise = null;
+      selectedPhotoFile = null;
+      removeCurrentPhoto = false;
+      profileAvatarPath = null;
+      profileForm.reset();
+      profileCountry.removeAttribute('data-selected-country');
+      profileCountry.setCustomValidity('');
+      profileCountryPicker.close();
+      clearProfileMessage();
+      clearMemberStatus();
+      document.getElementById('dashboardDiscoverCards').replaceChildren();
+      document.getElementById('discoverPeopleGrid').replaceChildren();
+      document.getElementById('settingsEmail').textContent = '';
+      if (profilePhotoObjectUrl) URL.revokeObjectURL(profilePhotoObjectUrl);
+      profilePhotoObjectUrl = null;
+      updateMemberIdentity('Member');
+    }
+
+    function showPublicLanding() {
+      memberAuthVersion += 1;
+      clearMemberData();
+      memberApp.hidden = true;
+      publicPageElements.forEach(element => element.classList.remove('hidden'));
+    }
+
+    function fillProfileForm(profile, privateProfile, user) {
+      const metadata = user.user_metadata || {};
+      const firstName = privateProfile?.first_name || metadata.first_name || '';
+      const lastName = privateProfile?.last_name || metadata.last_name || '';
+      const displayName = profile?.display_name || metadata.display_name ||
+        [firstName, lastName].filter(Boolean).join(' ');
+
+      document.getElementById('profileDisplayName').value = displayName;
+      document.getElementById('profileFirstName').value = firstName;
+      document.getElementById('profileLastName').value = lastName;
+      document.getElementById('profileDateOfBirth').value =
+        privateProfile?.date_of_birth || metadata.date_of_birth || '';
+      profileCountry.value = profile?.country || metadata.country || '';
+      if (profileCountry.value) profileCountry.dataset.selectedCountry = profileCountry.value;
+      else delete profileCountry.dataset.selectedCountry;
+      profileCountry.setCustomValidity('');
+      document.getElementById('profileCity').value = profile?.city || '';
+      document.getElementById('profileGender').value = profile?.gender || '';
+      document.getElementById('profileBio').value = profile?.bio || '';
+      document.getElementById('profileInterests').value = Array.isArray(profile?.interests)
+        ? profile.interests.join(', ')
+        : '';
+      document.getElementById('profileAccountType').value =
+        profile?.account_type || metadata.account_type || 'user';
+      profileAvatarPath = profile?.avatar_path || null;
+      selectedPhotoFile = null;
+      removeCurrentPhoto = false;
+      profilePhotoInput.value = '';
+    }
+
+    async function getSignedProfilePhoto(path) {
+      if (!path) return '';
+      const { data, error } = await supabaseClient.storage
+        .from('profile-photos')
+        .createSignedUrl(path, 900);
+      if (error) throw error;
+      return data.signedUrl;
+    }
+
+    function makeMemberCard(profile, photoUrl) {
+      const card = document.createElement('article');
+      card.className = 'overflow-hidden rounded-2xl border border-white/[0.08] bg-black/20';
+      const top = document.createElement('div');
+      top.className = 'flex items-center gap-3 p-4';
+      const portrait = document.createElement('div');
+      portrait.className = 'h-14 w-14 shrink-0 overflow-hidden rounded-full border border-white/10 bg-[#FF3E7F]/10';
+      if (photoUrl) {
+        const image = document.createElement('img');
+        image.src = photoUrl;
+        image.alt = `${profile.display_name}'s profile photo`;
+        image.className = 'h-full w-full object-cover';
+        portrait.append(image);
+      } else {
+        const initials = document.createElement('span');
+        initials.className = 'flex h-full w-full items-center justify-center font-bold text-[#FF8CA8]';
+        initials.textContent = getMemberInitials(profile.display_name);
+        portrait.append(initials);
+      }
+      const identity = document.createElement('div');
+      identity.className = 'min-w-0';
+      const name = document.createElement('p');
+      name.className = 'truncate text-sm font-bold text-white';
+      name.textContent = profile.display_name;
+      identity.append(name);
+      const location = document.createElement('p');
+      location.className = 'mt-1 truncate text-xs text-zinc-400';
+      location.textContent = [profile.city, profile.country, profile.age ? `${profile.age} years old` : '']
+        .filter(Boolean).join(' · ');
+      identity.append(location);
+      top.append(portrait, identity);
+      card.append(top);
+
+      const details = document.createElement('div');
+      details.className = 'border-t border-white/[0.06] px-4 py-3';
+      const bio = document.createElement('p');
+      bio.className = 'line-clamp-3 min-h-10 text-xs leading-5 text-zinc-300';
+      bio.textContent = profile.bio || 'This member has not added a bio yet.';
+      details.append(bio);
+      if (profile.interests?.length) {
+        const interests = document.createElement('p');
+        interests.className = 'mt-2 text-[10px] leading-4 text-[#FF8CA8]';
+        interests.textContent = profile.interests.join(' · ');
+        details.append(interests);
+      }
+      const accountType = document.createElement('span');
+      accountType.className = 'mt-3 inline-flex rounded-full border border-white/10 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wide text-zinc-400';
+      accountType.textContent = profile.account_type === 'creator' ? 'Creator' : 'Member';
+      details.append(accountType);
+      card.append(details);
+      return card;
+    }
+
+    async function loadDiscoverProfiles(userId, version) {
+      const { data, error } = await supabaseClient
+        .from('profile_cards')
+        .select('id, display_name, country, city, gender, bio, avatar_path, interests, account_type, age')
+        .neq('id', userId)
+        .limit(12);
+      if (error) throw error;
+      if (version !== memberAuthVersion) return;
+
+      const cards = await Promise.all((data || []).map(async profile => {
+        try {
+          return {
+            profile,
+            photoUrl: profile.avatar_path ? await getSignedProfilePhoto(profile.avatar_path) : '',
+            photoError: ''
+          };
+        } catch (error) {
+          return { profile, photoUrl: '', photoError: error.message };
+        }
+      }));
+      if (version !== memberAuthVersion) return;
+
+      const dashboardCards = document.getElementById('dashboardDiscoverCards');
+      const discoverCards = document.getElementById('discoverPeopleGrid');
+      dashboardCards.replaceChildren();
+      discoverCards.replaceChildren();
+      cards.slice(0, 4).forEach(({ profile, photoUrl }) => {
+        dashboardCards.append(makeMemberCard(profile, photoUrl));
+      });
+      cards.forEach(({ profile, photoUrl }) => {
+        discoverCards.append(makeMemberCard(profile, photoUrl));
+      });
+      document.getElementById('dashboardDiscoverEmpty').classList.toggle('hidden', cards.length > 0);
+      document.getElementById('discoverPeopleEmpty').classList.toggle('hidden', cards.length > 0);
+      const photoError = cards.find(card => card.photoError)?.photoError;
+      if (photoError) setMemberStatus(`Some profile photos could not be loaded: ${photoError}`, true);
+    }
+
+    async function loadMemberProfile(user, version) {
+      const [profileResult, privateResult] = await Promise.all([
+        supabaseClient.from('profiles').select('*').eq('id', user.id).maybeSingle(),
+        supabaseClient.from('profile_private')
+          .select('first_name, last_name, date_of_birth')
+          .eq('id', user.id)
+          .maybeSingle()
+      ]);
+      if (version !== memberAuthVersion) return false;
+      if (profileResult.error || privateResult.error) {
+        const error = profileResult.error || privateResult.error;
+        fillProfileForm(null, null, user);
+        updateMemberIdentity(
+          [user.user_metadata?.first_name, user.user_metadata?.last_name].filter(Boolean).join(' ') || 'Member'
+        );
+        memberProfileComplete = false;
+        setMemberStatus(
+          `Profile services are not ready: ${error.message}. Apply the included Supabase migration, then reload this page.`,
+          true
+        );
+        memberLoading.hidden = true;
+        switchMemberView('profile');
+        return false;
+      }
+
+      activeMemberProfile = profileResult.data;
+      activePrivateProfile = privateResult.data;
+      fillProfileForm(activeMemberProfile, activePrivateProfile, user);
+      memberProfileComplete = isProfileComplete(activeMemberProfile, activePrivateProfile);
+      const displayName = activeMemberProfile?.display_name ||
+        [activePrivateProfile?.first_name || user.user_metadata?.first_name,
+          activePrivateProfile?.last_name || user.user_metadata?.last_name]
+          .filter(Boolean).join(' ') || 'Member';
+      let photoUrl = '';
+      if (activeMemberProfile?.avatar_path) {
+        try {
+          photoUrl = await getSignedProfilePhoto(activeMemberProfile.avatar_path);
+        } catch (error) {
+          setMemberStatus(`Your profile photo could not be loaded: ${error.message}`, true);
+        }
+      }
+      if (version !== memberAuthVersion) return false;
+      updateMemberIdentity(displayName, photoUrl);
+      updateProfileCompletion(activeMemberProfile, activePrivateProfile);
+      document.getElementById('recentActivityText').textContent = memberProfileComplete
+        ? 'Your profile is ready. Discover people and explore the member space.'
+        : 'Finish setting up your profile to start your member journey.';
+      document.getElementById('settingsEmail').textContent = user.email || '';
+      memberLoading.hidden = true;
+
+      if (memberProfileComplete) {
+        clearMemberStatus();
+        switchMemberView('dashboard');
+        try {
+          await loadDiscoverProfiles(user.id, version);
+        } catch (error) {
+          setMemberStatus(`Member profiles could not be loaded: ${error.message}`, true);
+        }
+      } else {
+        switchMemberView('profile');
+        setProfileMessage('Complete the required fields below to finish setting up your profile.', 'loading');
+      }
+      return memberProfileComplete;
+    }
+
+    async function handleMemberSession(session) {
+      if (session?.user && activeMemberUser?.id === session.user.id && memberProfileLoadPromise) {
+        return memberProfileLoadPromise;
+      }
+      const version = ++memberAuthVersion;
+      if (!session?.user) {
+        showPublicLanding();
+        return;
+      }
+
+      activeMemberUser = session.user;
+      showMemberApp();
+      clearMemberStatus();
+      clearProfileMessage();
+      memberLoading.hidden = false;
+      document.querySelectorAll('.member-view').forEach(section => { section.hidden = true; });
+      const metadata = session.user.user_metadata || {};
+      updateMemberIdentity(
+        [metadata.first_name, metadata.last_name].filter(Boolean).join(' ') || 'Member'
+      );
+      document.getElementById('settingsEmail').textContent = session.user.email || '';
+      closeModal('loginModal');
+      closeModal('signupModal');
+
+      if (memberProfileLoadPromise) {
+        memberProfileLoadPromise = null;
+      }
+      const loadPromise = loadMemberProfile(session.user, version);
+      memberProfileLoadPromise = loadPromise;
+      try {
+        await loadPromise;
+      } catch (error) {
+        if (version === memberAuthVersion) {
+          memberLoading.hidden = true;
+          setMemberStatus(`Could not load your profile: ${error.message}`, true);
+          fillProfileForm(null, null, session.user);
+          memberProfileComplete = false;
+          switchMemberView('profile');
+        }
+      } finally {
+        if (memberProfileLoadPromise === loadPromise) memberProfileLoadPromise = null;
+      }
+    }
+
+    document.querySelectorAll('.member-nav-button').forEach(button => {
+      button.addEventListener('click', () => switchMemberView(button.dataset.memberTarget));
+    });
+
+    document.getElementById('memberMobileNavButton').addEventListener('click', event => {
+      const nav = document.getElementById('memberMobileNav');
+      const isOpening = nav.classList.contains('hidden');
+      nav.classList.toggle('hidden');
+      event.currentTarget.setAttribute('aria-expanded', String(isOpening));
+    });
+
+    async function logoutMember() {
+      if (typeof supabaseClient?.auth?.signOut !== 'function') {
+        setMemberStatus('Supabase authentication is unavailable. Reload the page and try again.', true);
+        return;
+      }
+      const { error } = await supabaseClient.auth.signOut();
+      if (error) {
+        setMemberStatus(`Could not log out: ${error.message}`, true);
+        return;
+      }
+      showToast('You have been logged out.');
+    }
+
+    document.querySelectorAll('.member-logout').forEach(button => {
+      button.addEventListener('click', () => {
+        logoutMember().catch(error => setMemberStatus(`Could not log out: ${error.message}`, true));
+      });
+    });
+
+    profilePhotoInput.addEventListener('change', async () => {
+      const file = profilePhotoInput.files?.[0];
+      selectedPhotoFile = null;
+      if (!file) return;
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        profilePhotoInput.value = '';
+        setProfileMessage('Choose a JPG, PNG, or WebP image.', 'error');
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        profilePhotoInput.value = '';
+        setProfileMessage('Profile photos must be 5 MB or smaller.', 'error');
+        return;
+      }
+      try {
+        const decodedImage = await createImageBitmap(file);
+        decodedImage.close();
+      } catch {
+        profilePhotoInput.value = '';
+        setProfileMessage('This file could not be decoded as an image. Choose a valid JPG, PNG, or WebP.', 'error');
+        return;
+      }
+      if (profilePhotoObjectUrl) URL.revokeObjectURL(profilePhotoObjectUrl);
+      profilePhotoObjectUrl = URL.createObjectURL(file);
+      selectedPhotoFile = file;
+      removeCurrentPhoto = false;
+      profilePhotoPreview.src = profilePhotoObjectUrl;
+      profilePhotoPreview.classList.remove('hidden');
+      profilePhotoInitials.classList.add('hidden');
+      removeProfilePhotoButton.classList.remove('hidden');
+      clearProfileMessage();
+    });
+
+    removeProfilePhotoButton.addEventListener('click', () => {
+      selectedPhotoFile = null;
+      removeCurrentPhoto = true;
+      profileAvatarPath = null;
+      profilePhotoInput.value = '';
+      if (profilePhotoObjectUrl) URL.revokeObjectURL(profilePhotoObjectUrl);
+      profilePhotoObjectUrl = null;
+      updateMemberIdentity(document.getElementById('profileDisplayName').value);
+      setProfileMessage('The photo will be removed when you save your profile.', 'loading');
+    });
+
+    profileForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      clearProfileMessage();
+      profileCountry.setCustomValidity(
+        profileCountry.value === profileCountry.dataset.selectedCountry
+          ? ''
+          : 'Please select a country from the list.'
+      );
+      if (!profileForm.reportValidity()) return;
+      if (!activeMemberUser || !supabaseClient) {
+        setProfileMessage('Sign in again before saving your profile.', 'error');
+        return;
+      }
+
+      const formData = new FormData(profileForm);
+      const dateOfBirth = formData.get('date_of_birth').toString();
+      const age = calculateAge(dateOfBirth);
+      if (!Number.isFinite(age) || age < 18) {
+        setProfileMessage('You must be at least 18 years old to complete your profile.', 'error');
+        document.getElementById('profileDateOfBirth').focus();
+        return;
+      }
+      const interests = formData.get('interests').toString()
+        .split(',')
+        .map(interest => interest.trim())
+        .filter(Boolean);
+      if (interests.length > 20 || interests.some(interest => interest.length > 40)) {
+        setProfileMessage('Enter up to 20 interests, each no longer than 40 characters.', 'error');
+        return;
+      }
+
+      const userId = activeMemberUser.id;
+      const saveUser = activeMemberUser;
+      const saveVersion = memberAuthVersion;
+      const previousAvatarPath = activeMemberProfile?.avatar_path || null;
+      const wasComplete = Boolean(activeMemberProfile?.onboarding_complete);
+      let uploadedPhotoPath = null;
+      let profilePersisted = false;
+      clearMemberStatus();
+      setSubmitPending(profileForm, true, 'Saving profile...');
+      setProfileMessage('Saving your profile securely...', 'loading');
+
+      try {
+        if (selectedPhotoFile) {
+          const extensionByType = {
+            'image/jpeg': 'jpg',
+            'image/png': 'png',
+            'image/webp': 'webp'
+          };
+          if (!crypto.randomUUID) throw new Error('Secure photo filenames are unavailable in this browser.');
+          uploadedPhotoPath = `${userId}/${crypto.randomUUID()}.${extensionByType[selectedPhotoFile.type]}`;
+          const { error: uploadError } = await supabaseClient.storage
+            .from('profile-photos')
+            .upload(uploadedPhotoPath, selectedPhotoFile, {
+              cacheControl: '3600',
+              contentType: selectedPhotoFile.type,
+              upsert: false
+            });
+          if (uploadError) throw uploadError;
+        }
+
+        const profilePayload = {
+          id: userId,
+          display_name: formData.get('display_name').toString().trim(),
+          country: profileCountry.value,
+          city: formData.get('city').toString().trim() || null,
+          gender: formData.get('gender').toString() || null,
+          bio: formData.get('bio').toString().trim() || null,
+          interests,
+          account_type: formData.get('account_type').toString(),
+          avatar_path: previousAvatarPath,
+          onboarding_complete: wasComplete
+        };
+        const { error: profileError } = await supabaseClient
+          .from('profiles')
+          .upsert(profilePayload, { onConflict: 'id' });
+        if (profileError) throw profileError;
+
+        const privatePayload = {
+          id: userId,
+          first_name: formData.get('first_name').toString().trim(),
+          last_name: formData.get('last_name').toString().trim(),
+          date_of_birth: dateOfBirth
+        };
+        const { error: privateError } = await supabaseClient
+          .from('profile_private')
+          .upsert(privatePayload, { onConflict: 'id' });
+        if (privateError) throw privateError;
+
+        const nextAvatarPath = removeCurrentPhoto ? null : (uploadedPhotoPath || previousAvatarPath);
+        const { error: completeError } = await supabaseClient
+          .from('profiles')
+          .update({ avatar_path: nextAvatarPath, onboarding_complete: true })
+          .eq('id', userId)
+          .select('*')
+          .single();
+        if (completeError) throw completeError;
+
+        profilePersisted = true;
+        profileAvatarPath = nextAvatarPath;
+        selectedPhotoFile = null;
+        removeCurrentPhoto = false;
+        if (profilePhotoObjectUrl) URL.revokeObjectURL(profilePhotoObjectUrl);
+        profilePhotoObjectUrl = null;
+        profilePhotoInput.value = '';
+        uploadedPhotoPath = null;
+
+        const verifiedComplete = await loadMemberProfile(saveUser, saveVersion);
+        if (saveVersion !== memberAuthVersion || activeMemberUser?.id !== userId) return;
+        if (!verifiedComplete) {
+          setProfileMessage(
+            'Your changes were saved, but Supabase still reports your profile as incomplete. Review the required fields and try again.',
+            'error'
+          );
+          return;
+        }
+
+        if (previousAvatarPath && previousAvatarPath !== nextAvatarPath) {
+          const { error: removeError } = await supabaseClient.storage
+            .from('profile-photos')
+            .remove([previousAvatarPath]);
+          if (removeError) {
+            setProfileMessage(`Profile saved, but the previous photo could not be removed: ${removeError.message}`, 'error');
+          } else {
+            setProfileMessage('Your profile has been saved.', 'success');
+          }
+        } else {
+          setProfileMessage('Your profile has been saved.', 'success');
+        }
+        showToast('Your profile is complete and has been saved.');
+      } catch (error) {
+        if (saveVersion !== memberAuthVersion || activeMemberUser?.id !== userId) return;
+        if (uploadedPhotoPath && !profilePersisted) {
+          const { error: cleanupError } = await supabaseClient.storage
+            .from('profile-photos')
+            .remove([uploadedPhotoPath]);
+          if (cleanupError) {
+            setMemberStatus(`Profile save failed: ${error.message}. The new photo cleanup also failed: ${cleanupError.message}`, true);
+          }
+        }
+        if (profilePersisted) {
+          memberProfileComplete = false;
+          setMemberStatus(`Your profile was saved, but completion could not be verified: ${error.message}`, true);
+          switchMemberView('profile');
+          setProfileMessage('Your changes were saved, but could not be verified. Reload the page and check your profile.', 'error');
+        } else {
+          setProfileMessage(`Could not save your profile: ${error.message}. Confirm the Supabase migration is applied and retry.`, 'error');
+        }
+      } finally {
+        setSubmitPending(profileForm, false);
+      }
+    });
+
+    if (typeof supabaseClient?.auth?.onAuthStateChange === 'function') {
+      supabaseClient.auth.onAuthStateChange((_event, session) => {
+        setTimeout(() => {
+          handleMemberSession(session).catch(error => {
+            memberLoading.hidden = true;
+            setMemberStatus(`Could not open your member area: ${error.message}`, true);
+          });
+        }, 0);
+      });
+    }
 
     document.querySelectorAll('.demo-form').forEach(form => {
       form.addEventListener('submit', event => {
