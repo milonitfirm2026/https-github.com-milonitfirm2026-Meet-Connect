@@ -1567,7 +1567,13 @@
       });
     });
 
-    profilePhotoInput.addEventListener('change', async () => {
+    profilePhotoInput.addEventListener('click', event => {
+      event.stopPropagation();
+    });
+
+    profilePhotoInput.addEventListener('change', async event => {
+      event.preventDefault();
+      event.stopPropagation();
       const file = profilePhotoInput.files?.[0];
       selectedPhotoFile = null;
       if (!file) return;
@@ -1646,6 +1652,9 @@
     profileForm.addEventListener('submit', async event => {
       event.preventDefault();
       clearProfileMessage();
+      if (!event.submitter || event.submitter.id !== 'profileSaveButton') {
+        return;
+      }
       profileCountry.setCustomValidity(
         profileCountry.value === profileCountry.dataset.selectedCountry
           ? ''
@@ -1797,7 +1806,10 @@
     });
 
     if (typeof supabaseClient?.auth?.onAuthStateChange === 'function') {
-      supabaseClient.auth.onAuthStateChange((_event, session) => {
+      supabaseClient.auth.onAuthStateChange((event, session) => {
+        if (!['INITIAL_SESSION', 'SIGNED_IN', 'SIGNED_OUT'].includes(event)) {
+          return;
+        }
         setTimeout(() => {
           handleMemberSession(session).catch(error => {
             memberLoading.hidden = true;
