@@ -500,7 +500,11 @@
         <label class="block text-xs font-medium text-zinc-300">Email<input id="signupEmail" name="email" type="email" required autocomplete="email" placeholder="you@example.com" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
         <label class="block text-xs font-medium text-zinc-300">Password<input id="signupPassword" name="password" type="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
         <label class="block text-xs font-medium text-zinc-300">Date of birth<input id="signupDateOfBirth" name="date_of_birth" type="date" required autocomplete="bday" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /><span class="mt-1 block text-[10px] text-zinc-500">This platform is intended for adults aged 18 and over.</span></label>
-        <label class="block text-xs font-medium text-zinc-300">Country<input id="signupCountry" name="country" type="text" required autocomplete="country-name" placeholder="Your country" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <label for="signupCountry" class="block text-xs font-medium text-zinc-300">Country</label>
+        <div id="signupCountryPicker" class="relative mt-1.5">
+          <input id="signupCountry" name="country" type="text" required autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="signupCountryOptions" placeholder="Search countries..." class="w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" />
+          <div id="signupCountryOptions" role="listbox" aria-label="Countries" class="absolute z-30 mt-1 hidden max-h-56 w-full overflow-y-auto rounded-xl border border-white/10 bg-[#100E13] p-1 shadow-xl"></div>
+        </div>
         <label class="block text-xs font-medium text-zinc-300">Account type<select id="signupAccountType" name="account_type" required class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]"><option value="" disabled selected>Select account type</option><option value="user">User</option><option value="creator">Creator</option></select></label>
         <label class="flex items-start gap-2 text-[11px] leading-relaxed text-zinc-400"><input id="signupAgeConfirmation" name="confirmed_18_plus" type="checkbox" required class="mt-0.5 accent-[#FF3E7F]" /><span>I confirm that I am at least 18 years old.</span></label>
         <label class="flex items-start gap-2 text-[11px] leading-relaxed text-zinc-400"><input id="signupTermsAcceptance" name="terms_accepted" type="checkbox" required class="mt-0.5 accent-[#FF3E7F]" /><span>I agree to the <a href="#footer" class="text-[#FF6B8B] hover:text-white">Terms of Service</a> and <a href="#footer" class="text-[#FF6B8B] hover:text-white">Privacy Policy</a>.</span></label>
@@ -648,6 +652,149 @@
       return today.getFullYear() - year - (birthdayHasPassed ? 0 : 1);
     }
 
+    const signupCountryPicker = document.getElementById('signupCountryPicker');
+    const signupCountry = document.getElementById('signupCountry');
+    const signupCountryOptions = document.getElementById('signupCountryOptions');
+    const countryGroups = [
+      { name: 'North America', countries: ['Canada', 'Mexico', 'United States'] },
+      { name: 'Central America', countries: ['Belize', 'Costa Rica', 'El Salvador', 'Guatemala', 'Honduras', 'Nicaragua', 'Panama'] },
+      { name: 'Caribbean', countries: ['Antigua and Barbuda', 'Bahamas', 'Barbados', 'Cuba', 'Dominica', 'Dominican Republic', 'Grenada', 'Haiti', 'Jamaica', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Trinidad and Tobago'] },
+      { name: 'South America', countries: ['Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Ecuador', 'Guyana', 'Paraguay', 'Peru', 'Suriname', 'Uruguay', 'Venezuela'] },
+      { name: 'Europe - Northern', countries: ['Denmark', 'Estonia', 'Finland', 'Iceland', 'Ireland', 'Latvia', 'Lithuania', 'Norway', 'Sweden', 'United Kingdom'] },
+      { name: 'Europe - Western', countries: ['Austria', 'Belgium', 'France', 'Germany', 'Liechtenstein', 'Luxembourg', 'Monaco', 'Netherlands', 'Switzerland'] },
+      { name: 'Europe - Eastern', countries: ['Belarus', 'Bulgaria', 'Czechia', 'Hungary', 'Moldova', 'Poland', 'Romania', 'Russia', 'Slovakia', 'Ukraine'] },
+      { name: 'Europe - Southern', countries: ['Albania', 'Andorra', 'Bosnia and Herzegovina', 'Croatia', 'Cyprus', 'Greece', 'Italy', 'Kosovo', 'Malta', 'Montenegro', 'North Macedonia', 'Portugal', 'San Marino', 'Serbia', 'Slovenia', 'Spain', 'Vatican City'] },
+      { name: 'Europe - Transcontinental', countries: ['Armenia', 'Azerbaijan', 'Georgia', 'Kazakhstan', 'Türkiye'] }
+    ];
+    let activeCountryIndex = -1;
+
+    function getCountryOptions() {
+      return [...signupCountryOptions.querySelectorAll('[role="option"]')];
+    }
+
+    function closeCountryOptions() {
+      signupCountryOptions.classList.add('hidden');
+      signupCountry.setAttribute('aria-expanded', 'false');
+      signupCountry.removeAttribute('aria-activedescendant');
+      activeCountryIndex = -1;
+    }
+
+    function openCountryOptions() {
+      const selectedCountry = signupCountry.dataset.selectedCountry === signupCountry.value;
+      renderCountryOptions(selectedCountry ? '' : signupCountry.value);
+      signupCountryOptions.classList.remove('hidden');
+      signupCountry.setAttribute('aria-expanded', 'true');
+    }
+
+    function renderCountryOptions(search = '') {
+      const query = search.trim().toLocaleLowerCase();
+      signupCountryOptions.replaceChildren();
+      activeCountryIndex = -1;
+      let optionIndex = 0;
+      let europeHeadingRendered = false;
+
+      countryGroups.forEach(group => {
+        const matches = group.countries.filter(country => country.toLocaleLowerCase().includes(query));
+        if (!matches.length) return;
+
+        const isEuropeGroup = group.name.startsWith('Europe -');
+        if (isEuropeGroup && !europeHeadingRendered) {
+          const europeHeading = document.createElement('div');
+          europeHeading.className = 'px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#FF6B8B]';
+          europeHeading.setAttribute('role', 'presentation');
+          europeHeading.textContent = 'Europe';
+          signupCountryOptions.append(europeHeading);
+          europeHeadingRendered = true;
+        }
+
+        const heading = document.createElement('div');
+        heading.className = isEuropeGroup
+          ? 'px-3 pt-2 pb-1 text-[9px] font-semibold uppercase tracking-wide text-zinc-400'
+          : 'px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#FF6B8B]';
+        heading.setAttribute('role', 'presentation');
+        heading.textContent = isEuropeGroup ? `${group.name.slice(9)} Europe` : group.name;
+        signupCountryOptions.append(heading);
+
+        matches.forEach(country => {
+          const option = document.createElement('div');
+          option.id = `signupCountryOption${optionIndex++}`;
+          option.className = 'cursor-pointer rounded-lg px-3 py-2 text-sm text-zinc-200 hover:bg-white/10';
+          option.setAttribute('role', 'option');
+          option.setAttribute('aria-selected', String(signupCountry.dataset.selectedCountry === country));
+          option.textContent = country;
+          option.addEventListener('click', () => {
+            signupCountry.value = country;
+            signupCountry.dataset.selectedCountry = country;
+            signupCountry.setCustomValidity('');
+            closeCountryOptions();
+          });
+          signupCountryOptions.append(option);
+        });
+      });
+
+      if (!signupCountryOptions.childElementCount) {
+        const emptyMessage = document.createElement('div');
+        emptyMessage.className = 'px-3 py-2 text-sm text-zinc-400';
+        emptyMessage.setAttribute('role', 'presentation');
+        emptyMessage.textContent = 'No matching countries.';
+        signupCountryOptions.append(emptyMessage);
+      }
+    }
+
+    function setActiveCountryOption(index) {
+      const options = getCountryOptions();
+      if (!options.length) return;
+      activeCountryIndex = ((index % options.length) + options.length) % options.length;
+      options.forEach((option, optionIndex) => {
+        const isActive = optionIndex === activeCountryIndex;
+        option.classList.toggle('bg-white/10', isActive);
+        option.setAttribute('aria-selected', String(isActive));
+      });
+      signupCountry.setAttribute('aria-activedescendant', options[activeCountryIndex].id);
+      options[activeCountryIndex].scrollIntoView({ block: 'nearest' });
+    }
+
+    signupCountry.addEventListener('focus', openCountryOptions);
+    signupCountry.addEventListener('click', () => {
+      if (signupCountryOptions.classList.contains('hidden')) openCountryOptions();
+    });
+    signupCountry.addEventListener('input', () => {
+      delete signupCountry.dataset.selectedCountry;
+      signupCountry.setCustomValidity('');
+      renderCountryOptions(signupCountry.value);
+      signupCountryOptions.classList.remove('hidden');
+      signupCountry.setAttribute('aria-expanded', 'true');
+    });
+    signupCountry.addEventListener('keydown', event => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (signupCountryOptions.classList.contains('hidden')) {
+          openCountryOptions();
+        }
+        const direction = event.key === 'ArrowDown' ? 1 : -1;
+        const nextIndex = activeCountryIndex < 0
+          ? (direction > 0 ? 0 : getCountryOptions().length - 1)
+          : activeCountryIndex + direction;
+        setActiveCountryOption(nextIndex);
+      } else if (event.key === 'Enter' && !signupCountryOptions.classList.contains('hidden')) {
+        event.preventDefault();
+        if (activeCountryIndex >= 0) {
+          getCountryOptions()[activeCountryIndex]?.click();
+        } else if (getCountryOptions().length === 1) {
+          getCountryOptions()[0].click();
+        } else {
+          setActiveCountryOption(0);
+        }
+      } else if (event.key === 'Escape') {
+        closeCountryOptions();
+      } else if (event.key === 'Tab') {
+        closeCountryOptions();
+      }
+    });
+    document.addEventListener('click', event => {
+      if (!signupCountryPicker.contains(event.target)) closeCountryOptions();
+    });
+
     const loginForm = document.getElementById('loginForm');
     const loginMessage = document.getElementById('loginMessage');
     loginForm.addEventListener('submit', async event => {
@@ -681,6 +828,11 @@
     signupForm.addEventListener('submit', async event => {
       event.preventDefault();
       clearAuthMessage(signupMessage);
+      signupCountry.setCustomValidity(
+        signupCountry.value === signupCountry.dataset.selectedCountry
+          ? ''
+          : 'Please select a country from the list.'
+      );
       if (!signupForm.reportValidity()) return;
 
       const formData = new FormData(signupForm);
@@ -722,6 +874,9 @@
         });
         if (error) throw error;
         signupForm.reset();
+        delete signupCountry.dataset.selectedCountry;
+        signupCountry.setCustomValidity('');
+        closeCountryOptions();
         if (data.session) {
           setAuthMessage(signupMessage, 'Your account was created and you are now signed in.', 'success');
         } else {
