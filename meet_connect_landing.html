@@ -1190,6 +1190,11 @@
           image.classList.add('hidden');
         }
       });
+      profilePhotoPreview.onerror = photoUrl ? () => {
+        profilePhotoPreview.removeAttribute('src');
+        profilePhotoPreview.classList.add('hidden');
+        profilePhotoInitials.classList.remove('hidden');
+      } : null;
       document.getElementById('headerAvatarInitials').classList.toggle('hidden', Boolean(photoUrl));
       document.getElementById('dashboardAvatarInitials').classList.toggle('hidden', Boolean(photoUrl));
       profilePhotoInitials.classList.toggle('hidden', Boolean(photoUrl));
@@ -1577,22 +1582,53 @@
         setProfileMessage('Profile photos must be 5 MB or smaller.', 'error');
         return;
       }
-      try {
-        const decodedImage = await createImageBitmap(file);
-        decodedImage.close();
-      } catch {
-        profilePhotoInput.value = '';
-        setProfileMessage('This file could not be decoded as an image. Choose a valid JPG, PNG, or WebP.', 'error');
-        return;
-      }
+
       if (profilePhotoObjectUrl) URL.revokeObjectURL(profilePhotoObjectUrl);
       profilePhotoObjectUrl = URL.createObjectURL(file);
       selectedPhotoFile = file;
       removeCurrentPhoto = false;
+      profilePhotoPreview.onload = null;
+      profilePhotoPreview.onerror = null;
       profilePhotoPreview.src = profilePhotoObjectUrl;
       profilePhotoPreview.classList.remove('hidden');
       profilePhotoInitials.classList.add('hidden');
       removeProfilePhotoButton.classList.remove('hidden');
+      setProfileMessage('Validating your selected photo...', 'loading');
+
+      try {
+        if (typeof createImageBitmap === 'function') {
+          try {
+            const decodedImage = await createImageBitmap(file);
+            decodedImage.close();
+          } catch {
+            await new Promise((resolve, reject) => {
+              const validationImage = new Image();
+              validationImage.onload = () => resolve();
+              validationImage.onerror = () => reject(new Error('Image decode failed'));
+              validationImage.src = profilePhotoObjectUrl;
+            });
+          }
+        } else {
+          await new Promise((resolve, reject) => {
+            const validationImage = new Image();
+            validationImage.onload = () => resolve();
+            validationImage.onerror = () => reject(new Error('Image decode failed'));
+            validationImage.src = profilePhotoObjectUrl;
+          });
+        }
+      } catch {
+        profilePhotoInput.value = '';
+        selectedPhotoFile = null;
+        removeCurrentPhoto = false;
+        URL.revokeObjectURL(profilePhotoObjectUrl);
+        profilePhotoObjectUrl = null;
+        profilePhotoPreview.removeAttribute('src');
+        profilePhotoPreview.classList.add('hidden');
+        profilePhotoInitials.classList.remove('hidden');
+        removeProfilePhotoButton.classList.toggle('hidden', !profileAvatarPath);
+        setProfileMessage('This file could not be decoded as an image. Choose a valid JPG, PNG, or WebP.', 'error');
+        return;
+      }
       clearProfileMessage();
     });
 
