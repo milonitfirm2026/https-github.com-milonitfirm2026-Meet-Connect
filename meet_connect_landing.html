@@ -475,13 +475,14 @@
       <span class="inline-flex rounded-full bg-[#FF3E7F]/10 px-3 py-1 text-[10px] font-semibold text-[#FF6B8B]">WELCOME BACK</span>
       <h2 id="loginTitle" class="mt-3 text-2xl font-bold text-white">Welcome Back</h2>
       <p class="mt-1 text-sm text-zinc-400">Log in to your Meet &amp; Connect account.</p>
-      <form class="demo-form mt-6 space-y-4" data-success="Login preview ready. No account was accessed.">
-        <label class="block text-xs font-medium text-zinc-300">Email<input type="email" required autocomplete="email" placeholder="you@example.com" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
-        <label class="block text-xs font-medium text-zinc-300">Password<input type="password" required autocomplete="current-password" placeholder="Enter your password" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
-        <div class="flex items-center justify-between text-xs"><button type="button" onclick="showToast('Password recovery is not available in this prototype.')" class="text-[#FF6B8B] hover:text-white">Forgot password?</button><span class="text-zinc-500">Demo only</span></div>
+      <form id="loginForm" class="mt-6 space-y-4">
+        <label class="block text-xs font-medium text-zinc-300">Email<input id="loginEmail" name="email" type="email" required autocomplete="email" placeholder="you@example.com" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <label class="block text-xs font-medium text-zinc-300">Password<input id="loginPassword" name="password" type="password" required autocomplete="current-password" placeholder="Enter your password" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <div class="flex items-center justify-between text-xs"><button type="button" onclick="showToast('Password recovery is not available in this prototype.')" class="text-[#FF6B8B] hover:text-white">Forgot password?</button><span class="text-zinc-500">Secure sign-in</span></div>
         <button type="submit" class="w-full rounded-xl bg-pink-gradient py-3 text-sm font-semibold text-white">Log In</button>
         <button type="button" onclick="showToast('Google sign-in is not connected in this prototype.')" class="w-full rounded-xl border border-white/10 bg-white/[0.03] py-3 text-sm font-semibold text-white hover:bg-white/[0.06]">Continue with Google</button>
       </form>
+      <div id="loginMessage" class="auth-message mt-4 hidden rounded-xl border p-4 text-center text-sm" role="status" aria-live="polite"></div>
       <p class="mt-5 text-center text-xs text-zinc-400">New here? <button onclick="closeModal('loginModal'); openModal('signupModal')" class="font-semibold text-[#FF6B8B] hover:text-white">Create an account</button></p>
     </div>
   </div>
@@ -492,18 +493,22 @@
       <button onclick="closeModal('signupModal')" class="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white" aria-label="Close sign-up">✕</button>
       <span class="inline-flex rounded-full bg-[#FF3E7F]/10 px-3 py-1 text-[10px] font-semibold text-[#FF6B8B]">YOUR NEXT CONNECTION STARTS HERE</span>
       <h2 id="signupTitle" class="mt-3 text-2xl font-bold text-white">Create Your Meet &amp; Connect Account</h2>
-      <p class="mt-1 text-xs leading-relaxed text-zinc-400">This is a frontend-only preview. Your details are not sent or stored.</p>
-      <form class="demo-form mt-5 space-y-3.5" data-success="Account setup preview ready. No account was created.">
-        <label class="block text-xs font-medium text-zinc-300">First name<input type="text" required autocomplete="given-name" placeholder="Your first name" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
-        <label class="block text-xs font-medium text-zinc-300">Email<input type="email" required autocomplete="email" placeholder="you@example.com" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
-        <label class="block text-xs font-medium text-zinc-300">Password<input type="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
-        <label class="block text-xs font-medium text-zinc-300">Date of birth<input type="date" required autocomplete="bday" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /><span class="mt-1 block text-[10px] text-zinc-500">This platform is intended for adults aged 18 and over.</span></label>
-        <label class="flex items-start gap-2 text-[11px] leading-relaxed text-zinc-400"><input type="checkbox" required class="mt-0.5 accent-[#FF3E7F]" /><span>I agree to the <a href="#footer" class="text-[#FF6B8B] hover:text-white">Terms of Service</a> and <a href="#footer" class="text-[#FF6B8B] hover:text-white">Privacy Policy</a>.</span></label>
+      <p class="mt-1 text-xs leading-relaxed text-zinc-400">Create your account to start connecting.</p>
+      <form id="signupForm" class="mt-5 space-y-3.5">
+        <label class="block text-xs font-medium text-zinc-300">First name<input id="signupFirstName" name="first_name" type="text" required autocomplete="given-name" placeholder="Your first name" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <label class="block text-xs font-medium text-zinc-300">Last name<input id="signupLastName" name="last_name" type="text" required autocomplete="family-name" placeholder="Your last name" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <label class="block text-xs font-medium text-zinc-300">Email<input id="signupEmail" name="email" type="email" required autocomplete="email" placeholder="you@example.com" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <label class="block text-xs font-medium text-zinc-300">Password<input id="signupPassword" name="password" type="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <label class="block text-xs font-medium text-zinc-300">Date of birth<input id="signupDateOfBirth" name="date_of_birth" type="date" required autocomplete="bday" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /><span class="mt-1 block text-[10px] text-zinc-500">This platform is intended for adults aged 18 and over.</span></label>
+        <label class="block text-xs font-medium text-zinc-300">Country<input id="signupCountry" name="country" type="text" required autocomplete="country-name" placeholder="Your country" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <label class="block text-xs font-medium text-zinc-300">Account type<select id="signupAccountType" name="account_type" required class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]"><option value="" disabled selected>Select account type</option><option value="user">User</option><option value="creator">Creator</option></select></label>
+        <label class="flex items-start gap-2 text-[11px] leading-relaxed text-zinc-400"><input id="signupAgeConfirmation" name="confirmed_18_plus" type="checkbox" required class="mt-0.5 accent-[#FF3E7F]" /><span>I confirm that I am at least 18 years old.</span></label>
+        <label class="flex items-start gap-2 text-[11px] leading-relaxed text-zinc-400"><input id="signupTermsAcceptance" name="terms_accepted" type="checkbox" required class="mt-0.5 accent-[#FF3E7F]" /><span>I agree to the <a href="#footer" class="text-[#FF6B8B] hover:text-white">Terms of Service</a> and <a href="#footer" class="text-[#FF6B8B] hover:text-white">Privacy Policy</a>.</span></label>
         <button type="submit" class="w-full rounded-xl bg-pink-gradient py-3 text-sm font-semibold text-white">Create Account</button>
         <button type="button" onclick="showToast('Google sign-up is not connected in this prototype.')" class="w-full rounded-xl border border-white/10 bg-white/[0.03] py-3 text-sm font-semibold text-white hover:bg-white/[0.06]">Continue with Google</button>
       </form>
       <p class="mt-5 text-center text-xs text-zinc-400">Already have an account? <button onclick="closeModal('signupModal'); openModal('loginModal')" class="font-semibold text-[#FF6B8B] hover:text-white">Log in</button></p>
-      <div class="success-message mt-4 hidden rounded-xl border border-emerald-400/20 bg-emerald-400/10 p-4 text-center text-sm text-emerald-200" role="status"></div>
+      <div id="signupMessage" class="auth-message mt-4 hidden rounded-xl border p-4 text-center text-sm" role="status" aria-live="polite"></div>
     </div>
   </div>
 
@@ -529,7 +534,13 @@
 
   <!-- 17. JavaScript interactions -->
   <div id="toast" class="pointer-events-none fixed bottom-5 left-1/2 z-[70] hidden -translate-x-1/2 rounded-xl border border-white/10 bg-[#201923] px-4 py-3 text-center text-xs text-white shadow-2xl" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2/dist/umd/supabase.js" integrity="sha384-A97u3Qnt9GZHURO9YJZRe7VQgGUeFzcv6I1oIGnUTxQrCxnpQMwR0/G8F2zt9abZ" crossorigin="anonymous"></script>
   <script>
+    const supabaseClient = window.supabase?.createClient(
+      'https://glyrytmkerjxdnaboday.supabase.co',
+      'sb_publishable__CDztMbHsyrmP79buCz5OQ_saT8Pkdq'
+    ) ?? null;
+
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const mobileMenu = document.getElementById('mobileMenu');
 
@@ -569,6 +580,10 @@
       if (!modal) return;
       modal.classList.add('hidden');
       modal.classList.remove('flex');
+      if (id === 'loginModal') {
+        document.getElementById('loginPassword').value = '';
+        clearAuthMessage(document.getElementById('loginMessage'));
+      }
       if (!document.querySelector('.modal.flex')) document.body.style.overflow = '';
     }
 
@@ -592,6 +607,132 @@
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => toast.classList.add('hidden'), 2800);
     }
+
+    function setAuthMessage(element, message, type) {
+      const styles = {
+        loading: 'border-white/10 bg-white/[0.03] text-zinc-300',
+        success: 'border-emerald-400/20 bg-emerald-400/10 text-emerald-200',
+        error: 'border-rose-400/20 bg-rose-400/10 text-rose-200'
+      };
+      element.textContent = message;
+      element.className = `auth-message mt-4 rounded-xl border p-4 text-center text-sm ${styles[type]}`;
+    }
+
+    function clearAuthMessage(element) {
+      element.textContent = '';
+      element.classList.add('hidden');
+    }
+
+    function setSubmitPending(form, pending, pendingText) {
+      const button = form.querySelector('button[type="submit"]');
+      if (!button) return;
+      if (pending) {
+        button.dataset.originalText = button.textContent;
+        button.textContent = pendingText;
+        button.disabled = true;
+        button.setAttribute('aria-busy', 'true');
+      } else {
+        button.textContent = button.dataset.originalText || button.textContent;
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+        delete button.dataset.originalText;
+      }
+    }
+
+    function calculateAge(dateOfBirth) {
+      const [year, month, day] = dateOfBirth.split('-').map(Number);
+      if (!year || !month || !day) return NaN;
+      const today = new Date();
+      const birthdayHasPassed = today.getMonth() + 1 > month ||
+        (today.getMonth() + 1 === month && today.getDate() >= day);
+      return today.getFullYear() - year - (birthdayHasPassed ? 0 : 1);
+    }
+
+    const loginForm = document.getElementById('loginForm');
+    const loginMessage = document.getElementById('loginMessage');
+    loginForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      clearAuthMessage(loginMessage);
+      if (!loginForm.reportValidity()) return;
+      if (!supabaseClient) {
+        setAuthMessage(loginMessage, 'Authentication could not load. Check your connection and try again.', 'error');
+        return;
+      }
+
+      const email = loginForm.elements.email.value.trim();
+      const password = loginForm.elements.password.value;
+      setSubmitPending(loginForm, true, 'Logging in...');
+      setAuthMessage(loginMessage, 'Signing in securely...', 'loading');
+      try {
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        loginForm.elements.password.value = '';
+        closeModal('loginModal');
+        showToast('You are logged in successfully.');
+      } catch (error) {
+        setAuthMessage(loginMessage, error.message || 'Login failed. Please try again.', 'error');
+      } finally {
+        setSubmitPending(loginForm, false);
+      }
+    });
+
+    const signupForm = document.getElementById('signupForm');
+    const signupMessage = document.getElementById('signupMessage');
+    signupForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      clearAuthMessage(signupMessage);
+      if (!signupForm.reportValidity()) return;
+
+      const formData = new FormData(signupForm);
+      const dateOfBirth = formData.get('date_of_birth').toString();
+      const age = calculateAge(dateOfBirth);
+      if (!Number.isFinite(age) || age < 18) {
+        setAuthMessage(signupMessage, 'You must be at least 18 years old to create an account.', 'error');
+        signupForm.elements.date_of_birth.focus();
+        return;
+      }
+      if (!supabaseClient) {
+        setAuthMessage(signupMessage, 'Authentication could not load. Check your connection and try again.', 'error');
+        return;
+      }
+
+      const email = formData.get('email').toString().trim();
+      const password = formData.get('password').toString();
+      const termsAcceptedAt = new Date().toISOString();
+      setSubmitPending(signupForm, true, 'Creating account...');
+      setAuthMessage(signupMessage, 'Creating your account securely...', 'loading');
+      try {
+        const { data, error } = await supabaseClient.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}${window.location.pathname}${window.location.search}`,
+            data: {
+              // User metadata is editable by the account owner and must not drive authorization.
+              first_name: formData.get('first_name').toString().trim(),
+              last_name: formData.get('last_name').toString().trim(),
+              date_of_birth: dateOfBirth,
+              country: formData.get('country').toString().trim(),
+              account_type: formData.get('account_type').toString(),
+              confirmed_18_plus: true,
+              terms_accepted: true,
+              terms_accepted_at: termsAcceptedAt
+            }
+          }
+        });
+        if (error) throw error;
+        signupForm.reset();
+        if (data.session) {
+          setAuthMessage(signupMessage, 'Your account was created and you are now signed in.', 'success');
+        } else {
+          setAuthMessage(signupMessage, 'Your account was created. Please check your email to confirm your address before logging in.', 'success');
+        }
+      } catch (error) {
+        setAuthMessage(signupMessage, error.message || 'Signup failed. Please try again.', 'error');
+      } finally {
+        setSubmitPending(signupForm, false);
+      }
+    });
 
     document.querySelectorAll('.demo-form').forEach(form => {
       form.addEventListener('submit', event => {
