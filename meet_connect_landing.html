@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <!-- 1. Head / theme -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#09080B" />
+  <meta name="description" content="Meet & Connect is a global social platform concept for adults to discover people, chat, join live streams, and explore creator content." />
+  <title>Meet &amp; Connect — Meet. Connect. Experience More.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            obsidian: { 950: '#09080B', 900: '#100E13', 850: '#141118', 800: '#1A1620' },
+            accent: { pink: '#FF3E7F', coral: '#FF5E7E' }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root { color-scheme: dark; }
+    html { scroll-padding-top: 6rem; }
+    body {
+      background: #09080B;
+      color: #F4F4F6;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+    }
+    .bg-pink-gradient { background: linear-gradient(135deg, #FF3E7F 0%, #FF5E7E 100%); }
+    .bg-pink-gradient-hover:hover {
+      background: linear-gradient(135deg, #FF2A70 0%, #FF4D71 100%);
+      box-shadow: 0 8px 28px -4px rgba(255, 62, 127, .45);
+    }
+    .text-pink-gradient {
+      background: linear-gradient(135deg, #FF3E7F 0%, #FF6B8B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .ambient {
+      background:
+        radial-gradient(circle at 75% 14%, rgba(255, 62, 127, .14), transparent 34rem),
+        radial-gradient(circle at 14% 32%, rgba(132, 72, 196, .10), transparent 32rem);
+    }
+    .surface-card {
+      background: rgba(20, 17, 24, .86);
+      border: 1px solid rgba(255, 255, 255, .075);
+      box-shadow: 0 18px 50px -30px rgba(0, 0, 0, .8);
+      backdrop-filter: blur(14px);
+      transition: transform .25s cubic-bezier(.22, 1, .36, 1), border-color .25s ease, box-shadow .25s ease;
+    }
+    .surface-card:hover {
+      border-color: rgba(255, 62, 127, .34);
+      box-shadow: 0 18px 40px -20px rgba(255, 62, 127, .18);
+      transform: translateY(-3px);
+    }
+    .collage-card {
+      border: 1px solid rgba(255, 255, 255, .12);
+      box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .75);
+      transition: transform .3s ease, border-color .3s ease;
+    }
+    .collage-card:hover { border-color: rgba(255, 62, 127, .5); z-index: 20; }
+    .modal-backdrop { background: rgba(5, 4, 7, .82); backdrop-filter: blur(10px); }
+    .pulse-dot::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background: #34d399;
+      animation: pulse-ring 1.8s infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(.85); opacity: .8; }
+      70%, 100% { transform: scale(1.8); opacity: 0; }
+    }
+    .soft-scrollbar { scrollbar-color: #3b303e #141118; scrollbar-width: thin; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+
+<body class="antialiased selection:bg-[#FF3E7F] selection:text-white">
+  <!-- 2. Header -->
+  <header class="sticky top-0 z-40 w-full border-b border-white/[0.05] bg-[#09080B]/85 backdrop-blur-xl">
+    <div class="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <a href="#top" class="group flex shrink-0 items-center gap-3" aria-label="Meet & Connect home">
+        <span class="flex h-10 w-10 items-center justify-center rounded-xl border border-[#FF3E7F]/30 bg-[#1A1218] transition-colors group-hover:border-[#FF3E7F]">
+          <svg class="h-6 w-6 text-[#FF3E7F]" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M16 26.5S5 19.4 5 11.6C5 8.1 7.7 5.5 11 5.5c2.2 0 4.1 1.2 5 3 0.9-1.8 2.8-3 5-3 3.3 0 6 2.6 6 6.1 0 7.8-11 14.9-11 14.9Z" stroke="url(#brandGradient)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9.5 16h4l2-3 2 6 2-3h3" stroke="#FF7597" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs><linearGradient id="brandGradient" x1="5" y1="5.5" x2="27" y2="26.5"><stop stop-color="#FF3E7F"/><stop offset="1" stop-color="#FF6B8B"/></linearGradient></defs>
+          </svg>
+        </span>
+        <span class="flex flex-col">
+          <span class="text-base font-bold tracking-tight text-white sm:text-lg">Meet <span class="text-[#FF3E7F]">&amp;</span> Connect</span>
+          <span class="hidden text-[10px] font-medium tracking-wide text-zinc-400 sm:block">Meet. Connect. Experience More.</span>
+        </span>
+      </a>
+
+      <nav class="hidden items-center gap-6 text-sm font-medium text-zinc-300 lg:flex" aria-label="Main navigation">
+        <a href="#discover" class="hover:text-white">Discover</a>
+        <a href="#dating" class="hover:text-white">Dating</a>
+        <a href="#live" class="hover:text-white">Live</a>
+        <a href="#premium" class="hover:text-white">Premium</a>
+        <a href="#features" class="hover:text-white">Features</a>
+        <a href="#safety" class="hover:text-white">Safety</a>
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button id="languageButton" class="hidden items-center gap-1.5 rounded-lg px-2 py-2 text-xs font-medium text-zinc-300 hover:text-white sm:inline-flex" aria-label="Change language">
+          <svg class="h-4 w-4 text-zinc-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14.5 14.5 0 0 1 0 18M12 3a14.5 14.5 0 0 0 0 18"/></svg>
+          <span id="languageLabel">English</span>
+        </button>
+        <button onclick="openModal('loginModal')" class="hidden rounded-xl border border-white/10 bg-[#141118] px-4 py-2 text-sm font-semibold text-white transition hover:border-[#FF3E7F]/50 hover:bg-[#1B1621] sm:inline-flex">Login</button>
+        <button onclick="openModal('signupModal')" class="rounded-xl bg-pink-gradient px-4 py-2 text-xs font-semibold text-white shadow-md shadow-[#FF3E7F]/20 transition sm:px-5 sm:text-sm">Get Started</button>
+        <button id="mobileMenuButton" class="rounded-xl border border-white/10 bg-[#141118] p-2 text-zinc-300 hover:text-white lg:hidden" aria-label="Toggle navigation" aria-expanded="false">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav id="mobileMenu" class="hidden border-t border-white/10 bg-[#100E13] px-4 py-3 lg:hidden" aria-label="Mobile navigation">
+      <div class="mx-auto grid max-w-7xl grid-cols-2 gap-1">
+        <a href="#discover" class="mobile-link rounded-lg px-3 py-2.5 text-sm text-zinc-300 hover:bg-white/5 hover:text-white">Discover</a>
+        <a href="#dating" class="mobile-link rounded-lg px-3 py-2.5 text-sm text-zinc-300 hover:bg-white/5 hover:text-white">Dating</a>
+        <a href="#live" class="mobile-link rounded-lg px-3 py-2.5 text-sm text-zinc-300 hover:bg-white/5 hover:text-white">Live</a>
+        <a href="#premium" class="mobile-link rounded-lg px-3 py-2.5 text-sm text-zinc-300 hover:bg-white/5 hover:text-white">Premium</a>
+        <a href="#features" class="mobile-link rounded-lg px-3 py-2.5 text-sm text-zinc-300 hover:bg-white/5 hover:text-white">Features</a>
+        <a href="#safety" class="mobile-link rounded-lg px-3 py-2.5 text-sm text-zinc-300 hover:bg-white/5 hover:text-white">Safety</a>
+        <button onclick="openModal('loginModal')" class="rounded-lg px-3 py-2.5 text-left text-sm text-zinc-300 hover:bg-white/5 hover:text-white sm:hidden">Login</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top" class="ambient">
+    <!-- 3. Hero -->
+    <section class="mx-auto max-w-7xl px-4 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8 lg:pt-16">
+      <div class="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
+        <div class="space-y-6 lg:col-span-6">
+          <div class="inline-flex items-center gap-2 rounded-full border border-[#FF3E7F]/20 bg-[#FF3E7F]/[0.08] px-3 py-1.5 text-xs font-semibold text-pink-200">
+            <span class="relative h-2 w-2 rounded-full bg-emerald-400 pulse-dot"></span>
+            A new way to find your people
+          </div>
+          <h1 class="text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl xl:text-[60px]">
+            Meet People.<br />
+            Connect Instantly.<br />
+            <span class="text-pink-gradient">Experience More.</span>
+          </h1>
+          <p class="max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg">
+            Join a global community where adults can discover new people, chat privately, connect through voice and video calls, watch live streams, and explore premium content from creators.
+          </p>
+          <div class="flex flex-wrap gap-x-5 gap-y-3 text-xs font-medium text-zinc-200 sm:text-sm">
+            <span class="flex items-center gap-2"><span class="text-[#FF3E7F]">✓</span> Real People</span>
+            <span class="flex items-center gap-2"><span class="text-[#FF3E7F]">✓</span> Safety by Design</span>
+            <span class="flex items-center gap-2"><span class="text-[#FF3E7F]">✓</span> Private &amp; Premium</span>
+          </div>
+          <div class="flex flex-col gap-3 pt-1 sm:flex-row">
+            <button onclick="document.getElementById('discover').scrollIntoView({behavior:'smooth'})" class="inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-pink-gradient px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#FF3E7F]/25 transition hover:-translate-y-0.5">
+              Explore Now
+              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#FF3E7F]">
+                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7"/></svg>
+              </span>
+            </button>
+            <button onclick="openModal('howModal')" class="inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/10 bg-[#141118] px-7 py-3.5 text-sm font-semibold text-white transition hover:border-[#FF3E7F]/50 hover:bg-[#1A1620]">
+              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#09080B]">
+                <svg class="ml-0.5 h-3 w-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </span>
+              How It Works
+            </button>
+          </div>
+          <p class="text-[11px] text-zinc-500">A product preview. Explore the page without creating an account.</p>
+        </div>
+
+        <div class="relative lg:col-span-6">
+          <div class="pointer-events-none absolute inset-10 rounded-full bg-[#FF3E7F]/15 blur-3xl"></div>
+          <div class="relative mx-auto grid max-w-xl grid-cols-12 items-center gap-3 sm:gap-4">
+            <div class="col-span-3 space-y-3 sm:space-y-4">
+              <article class="collage-card relative aspect-[4/5] -rotate-3 overflow-hidden rounded-2xl bg-[#16121C] hover:rotate-0">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=85" alt="Portrait of a woman smiling outdoors" class="h-full w-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/10"></div>
+                <span class="absolute left-2 top-2 rounded-full bg-[#FF3E7F] px-2 py-1 text-[9px] font-bold text-white">LIVE</span>
+                <span class="absolute bottom-2 left-2 text-[10px] font-semibold text-white">Maya, 25</span>
+                <span class="absolute bottom-2 right-2 rounded-full bg-black/60 px-1.5 py-1 text-[8px] text-white">1.2k</span>
+              </article>
+              <article class="collage-card relative aspect-[4/5] rotate-2 overflow-hidden rounded-2xl bg-[#16121C] hover:rotate-0">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=85" alt="Portrait of a man in a city" class="h-full w-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 to-transparent"></div>
+                <span class="absolute bottom-2 left-2 text-[10px] font-semibold text-white">Noah, 29</span>
+                <span class="absolute bottom-2 right-2 flex items-center gap-1 text-[8px] text-emerald-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Online</span>
+              </article>
+            </div>
+
+            <article id="dating" class="collage-card relative col-span-6 aspect-[3/4.5] overflow-hidden rounded-3xl bg-[#16121C]">
+              <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=700&q=85" alt="Featured profile portrait of Sophia" class="h-full w-full object-cover object-center" />
+              <div class="absolute inset-0 bg-gradient-to-t from-[#09080B] via-[#09080B]/10 to-black/10"></div>
+              <div class="absolute left-3 right-3 top-3 flex items-center justify-between">
+                <span class="rounded-full border border-white/15 bg-black/50 px-2.5 py-1 text-[9px] font-semibold text-white backdrop-blur">Featured profile</span>
+                <span class="rounded-full bg-[#FF3E7F] px-2 py-1 text-[9px] font-bold text-white">NEW</span>
+              </div>
+              <div class="absolute bottom-4 left-4 right-4">
+                <div class="flex items-center gap-2">
+                  <h2 class="text-lg font-bold text-white sm:text-xl">Sophia, 26</h2>
+                  <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+                </div>
+                <p class="mt-1 text-xs text-zinc-200">London, UK · Online</p>
+                <div class="mt-3 flex gap-2">
+                  <button onclick="openModal('signupModal')" class="flex-1 rounded-xl bg-pink-gradient py-2 text-[10px] font-bold text-white">Say hello</button>
+                  <button onclick="openModal('signupModal')" aria-label="Like Sophia" class="flex h-9 w-9 items-center justify-center rounded-xl border border-white/20 bg-black/40 text-white">♡</button>
+                </div>
+              </div>
+            </article>
+
+            <div class="col-span-3 space-y-3 sm:space-y-4">
+              <article class="collage-card relative aspect-[4/5] rotate-3 overflow-hidden rounded-2xl bg-[#16121C] hover:rotate-0">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=85" alt="Portrait of a man smiling" class="h-full w-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 to-transparent"></div>
+                <span class="absolute left-2 top-2 rounded-full bg-[#FF3E7F] px-2 py-1 text-[9px] font-bold text-white">LIVE</span>
+                <span class="absolute bottom-2 left-2 text-[10px] font-semibold text-white">Ethan, 28</span>
+                <span class="absolute bottom-2 right-2 rounded-full bg-black/60 px-1.5 py-1 text-[8px] text-white">840</span>
+              </article>
+              <article class="collage-card relative aspect-[4/5] -rotate-2 overflow-hidden rounded-2xl bg-[#16121C] hover:rotate-0">
+                <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=400&q=85" alt="Portrait of a woman in a sunny outdoor setting" class="h-full w-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 to-transparent"></div>
+                <span class="absolute bottom-2 left-2 text-[10px] font-semibold text-white">Amara, 27</span>
+                <span class="absolute bottom-2 right-2 flex items-center gap-1 text-[8px] text-emerald-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Online</span>
+              </article>
+            </div>
+          </div>
+          <div class="absolute -bottom-5 left-1/2 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-white/10 bg-[#141118]/90 px-4 py-2 text-xs text-zinc-300 shadow-xl backdrop-blur md:flex">
+            <span class="h-2 w-2 rounded-full bg-emerald-400"></span> Discover people near you or worldwide
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Feature strip -->
+    <section id="features" class="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+      <div class="surface-card grid grid-cols-1 gap-2 rounded-3xl p-3 sm:grid-cols-2 sm:p-5 lg:grid-cols-5">
+        <a href="#dating" class="rounded-2xl p-4 text-center transition hover:bg-white/[0.03]">
+          <span class="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#FF3E7F]/20 bg-[#FF3E7F]/10 text-[#FF3E7F]">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.6c0 5.2-8.8 10.4-8.8 10.4S3.2 13.8 3.2 8.6A4.6 4.6 0 0 1 12 6.3a4.6 4.6 0 0 1 8.8 2.3Z"/></svg>
+          </span>
+          <h3 class="text-sm font-bold text-white">Meet &amp; Date</h3><p class="mt-1 text-xs leading-relaxed text-zinc-400">Find people near you or around the world.</p>
+        </a>
+        <a href="#chat" class="rounded-2xl p-4 text-center transition hover:bg-white/[0.03]">
+          <span class="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#FF3E7F]/20 bg-[#FF3E7F]/10 text-[#FF3E7F]">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 4a8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.4Z"/></svg>
+          </span>
+          <h3 class="text-sm font-bold text-white">Chat &amp; Call</h3><p class="mt-1 text-xs leading-relaxed text-zinc-400">Private messaging plus voice and video calls.</p>
+        </a>
+        <a href="#live" class="rounded-2xl p-4 text-center transition hover:bg-white/[0.03]">
+          <span class="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#FF3E7F]/20 bg-[#FF3E7F]/10 text-[#FF3E7F]">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19 5a10 10 0 0 1 0 14M5 19A10 10 0 0 1 5 5"/></svg>
+          </span>
+          <h3 class="text-sm font-bold text-white">Live Streaming</h3><p class="mt-1 text-xs leading-relaxed text-zinc-400">Watch or go live and interact in real time.</p>
+        </a>
+        <a href="#premium" class="rounded-2xl p-4 text-center transition hover:bg-white/[0.03]">
+          <span class="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#FF3E7F]/20 bg-[#FF3E7F]/10 text-[#FF3E7F]">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg>
+          </span>
+          <h3 class="text-sm font-bold text-white">Premium Content</h3><p class="mt-1 text-xs leading-relaxed text-zinc-400">Discover exclusive creator posts and media.</p>
+        </a>
+        <a href="#wallet" class="rounded-2xl p-4 text-center transition hover:bg-white/[0.03] sm:col-span-2 lg:col-span-1">
+          <span class="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#FF3E7F]/20 bg-[#FF3E7F]/10 text-[#FF3E7F]">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8V5a2 2 0 0 0-2-2H5a3 3 0 0 0 0 6h15v10a2 2 0 0 1-2 2H5a3 3 0 0 1-3-3V6"/><path d="M20 12h-4a2 2 0 0 0 0 4h4"/><path d="M16 14h.01"/></svg>
+          </span>
+          <h3 class="text-sm font-bold text-white">Tips &amp; Gifts</h3><p class="mt-1 text-xs leading-relaxed text-zinc-400">Support creators and show appreciation.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 5. Community section -->
+    <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div class="surface-card grid grid-cols-2 gap-5 rounded-3xl px-4 py-7 text-center lg:grid-cols-4 lg:divide-x lg:divide-white/[0.07]">
+        <div class="px-3"><div class="text-lg font-extrabold text-[#FF3E7F] sm:text-xl">Global Community</div><p class="mt-1 text-xs text-zinc-400">Growing worldwide</p></div>
+        <div class="px-3"><div class="text-lg font-extrabold text-[#FF3E7F] sm:text-xl">Creators</div><p class="mt-1 text-xs text-zinc-400">Verified &amp; growing</p></div>
+        <div class="px-3"><div class="text-lg font-extrabold text-[#FF3E7F] sm:text-xl">Live</div><p class="mt-1 text-xs text-zinc-400">Real-time connections</p></div>
+        <div class="px-3"><div class="text-lg font-extrabold text-[#FF3E7F] sm:text-xl">Messages</div><p class="mt-1 text-xs text-zinc-400">Private conversations</p></div>
+      </div>
+      <p class="mt-3 text-center text-[10px] text-zinc-600">Community labels describe the product concept; no live platform metrics are being presented.</p>
+    </section>
+
+    <!-- 6–10. Discovery, chat, live, premium and wallet previews -->
+    <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div class="mb-8 text-center">
+        <p class="text-xs font-bold uppercase tracking-[.18em] text-[#FF6B8B]">One place, more ways to connect</p>
+        <h2 class="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">Everything You Need to Connect</h2>
+        <p class="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">A quick look at the experiences Meet &amp; Connect is designed to bring together.</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-6">
+        <!-- 6. Discover preview -->
+        <article id="discover" class="surface-card overflow-hidden rounded-3xl p-4 sm:col-span-2 lg:col-span-2">
+          <div class="mb-3 flex items-center justify-between"><div><h3 class="font-bold text-white">Discover</h3><p class="text-[11px] text-zinc-400">Meet someone new</p></div><span class="rounded-full bg-[#FF3E7F]/10 px-2.5 py-1 text-[10px] font-semibold text-[#FF6B8B]">For you</span></div>
+          <div class="relative h-64 overflow-hidden rounded-2xl bg-[#09080B]">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=700&q=85" alt="Discover preview profile portrait" class="h-full w-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+            <div class="absolute bottom-3 left-3 right-3">
+              <div class="flex items-center gap-2"><span class="text-lg font-bold text-white">Sophia, 26</span><span class="h-2 w-2 rounded-full bg-emerald-400"></span></div>
+              <p class="text-xs text-zinc-200">London, UK · Online</p>
+              <div class="mt-3 grid grid-cols-3 gap-2">
+                <button onclick="showToast('Discovery is a preview in this prototype.')" class="rounded-lg border border-white/20 bg-black/40 py-2 text-[10px] font-semibold text-white">Pass</button>
+                <button onclick="showToast('Like action preview.')" class="rounded-lg bg-pink-gradient py-2 text-[10px] font-semibold text-white">Like ♡</button>
+                <button onclick="openModal('signupModal')" class="rounded-lg border border-white/20 bg-black/40 py-2 text-[10px] font-semibold text-white">View</button>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs leading-relaxed text-zinc-400">Browse profiles at your pace. Your discovery preferences would be yours to control.</p>
+        </article>
+
+        <!-- 7. Chat & Call preview -->
+        <article id="chat" class="surface-card rounded-3xl p-4 sm:col-span-2 lg:col-span-2">
+          <div class="mb-3 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Maya's profile avatar" class="h-9 w-9 rounded-full object-cover" />
+              <div><h3 class="text-sm font-bold text-white">Maya</h3><p class="flex items-center gap-1 text-[10px] text-emerald-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Online</p></div>
+            </div>
+            <div class="flex gap-1.5">
+              <button onclick="showToast('Voice call is a visual demo.')" aria-label="Voice call preview" class="rounded-lg border border-white/10 bg-white/5 p-2 text-zinc-300 hover:text-white"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 8.9a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.8 2.1Z"/></svg></button>
+              <button onclick="showToast('Video call is a visual demo.')" aria-label="Video call preview" class="rounded-lg border border-white/10 bg-white/5 p-2 text-zinc-300 hover:text-white"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg></button>
+            </div>
+          </div>
+          <div class="flex h-48 flex-col justify-end gap-3 rounded-2xl border border-white/[0.06] bg-[#0D0B10] p-3">
+            <div class="max-w-[82%] self-start rounded-2xl rounded-tl-sm bg-white/[0.08] px-3 py-2 text-xs text-zinc-200">Hey! What’s your favorite place to explore? ✨</div>
+            <div class="max-w-[82%] self-end rounded-2xl rounded-tr-sm bg-pink-gradient px-3 py-2 text-xs text-white">Somewhere with great coffee and a view ☕</div>
+            <div class="max-w-[82%] self-start rounded-2xl rounded-tl-sm bg-white/[0.08] px-3 py-2 text-xs text-zinc-200">That sounds like a perfect weekend.</div>
+          </div>
+          <div class="mt-3 flex items-center gap-2">
+            <button onclick="showToast('Attachments are a visual demo.')" aria-label="Attachment preview" class="rounded-lg border border-white/10 bg-white/5 p-2 text-zinc-400"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.4 11.1-8.5 8.5a5 5 0 0 1-7.1-7.1l9.2-9.2a3.3 3.3 0 0 1 4.7 4.7L10.5 17a1.7 1.7 0 0 1-2.4-2.4l8.5-8.5"/></svg></button>
+            <div class="flex-1 rounded-lg border border-white/10 bg-[#09080B] px-3 py-2 text-xs text-zinc-500">Write a message…</div>
+            <button onclick="openModal('signupModal')" aria-label="Send message preview" class="rounded-lg bg-pink-gradient p-2 text-white"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
+          </div>
+        </article>
+
+        <!-- 8. Live preview -->
+        <article id="live" class="surface-card overflow-hidden rounded-3xl p-4 sm:col-span-2 lg:col-span-2">
+          <div class="mb-3 flex items-center justify-between"><div><h3 class="font-bold text-white">Go Live</h3><p class="text-[11px] text-zinc-400">Join the conversation</p></div><span class="rounded-full bg-[#FF3E7F] px-2.5 py-1 text-[9px] font-bold tracking-wide text-white">LIVE</span></div>
+          <div class="relative h-64 overflow-hidden rounded-2xl bg-[#09080B]">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=700&q=85" alt="Creator smiling during a live stream preview" class="h-full w-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/10"></div>
+            <div class="absolute left-3 right-3 top-3 flex justify-between">
+              <span class="rounded-full bg-[#FF3E7F] px-2 py-1 text-[9px] font-bold text-white">● LIVE</span>
+              <span class="rounded-full bg-black/55 px-2 py-1 text-[9px] text-white">◉ 1.4k watching</span>
+            </div>
+            <div class="absolute bottom-3 left-3 right-3">
+              <div class="mb-3 space-y-1 text-[10px] text-white">
+                <p><span class="font-bold text-pink-200">Lena:</span> This playlist is everything!</p>
+                <p><span class="font-bold text-emerald-300">Kai:</span> Hello from Toronto 👋</p>
+              </div>
+              <div class="flex gap-2"><button onclick="showToast('Live is a preview in this prototype.')" class="flex-1 rounded-lg bg-pink-gradient py-2 text-[10px] font-bold text-white">Join Live</button><button onclick="showToast('Follow action preview.')" class="rounded-lg border border-white/20 bg-black/40 px-3 py-2 text-[10px] font-semibold text-white">Follow</button><button onclick="showToast('Reaction preview ♥')" class="rounded-lg border border-white/20 bg-black/40 px-3 text-sm text-[#FF6B8B]" aria-label="Send a heart">♥</button></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 9. Premium preview -->
+        <article id="premium" class="surface-card overflow-hidden rounded-3xl p-4 sm:col-span-2 lg:col-span-3">
+          <div class="mb-3 flex items-center justify-between"><div><h3 class="font-bold text-white">Premium Content</h3><p class="text-[11px] text-zinc-400">Creator posts, your way</p></div><span class="rounded-full border border-[#FF3E7F]/20 bg-[#FF3E7F]/10 px-2.5 py-1 text-[10px] font-semibold text-[#FF6B8B]">MEMBERSHIP</span></div>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="relative h-36 overflow-hidden rounded-xl sm:h-44"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=350&q=80" alt="Tasteful creator lifestyle portrait preview" class="h-full w-full object-cover blur-[2px]" /><div class="absolute inset-0 flex items-center justify-center bg-black/35"><span class="text-2xl text-white">🔒</span></div></div>
+            <div class="relative h-36 overflow-hidden rounded-xl sm:h-44"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=350&q=80" alt="Locked creator portrait preview" class="h-full w-full object-cover blur-[2px]" /><div class="absolute inset-0 flex items-center justify-center bg-black/35"><span class="text-2xl text-white">🔒</span></div></div>
+            <div class="relative h-36 overflow-hidden rounded-xl sm:h-44"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=350&q=80" alt="Locked creator lifestyle content preview" class="h-full w-full object-cover blur-[2px]" /><div class="absolute inset-0 flex items-center justify-center bg-black/35"><span class="text-2xl text-white">🔒</span></div></div>
+          </div>
+          <div class="mt-3 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+            <div><p class="text-sm font-bold text-white">Unlock exclusive photos and videos.</p><p class="mt-1 text-[11px] text-zinc-400">Tasteful, creator-led content previews. Access options are a product concept.</p></div>
+            <button onclick="openModal('signupModal')" class="rounded-xl bg-pink-gradient px-5 py-2.5 text-xs font-bold text-white">Unlock</button>
+          </div>
+        </article>
+
+        <!-- 10. Creator / wallet preview -->
+        <article id="wallet" class="surface-card rounded-3xl p-4 sm:col-span-2 lg:col-span-3">
+          <div class="mb-3 flex items-center justify-between"><div><h3 class="font-bold text-white">Creator Hub</h3><p class="text-[11px] text-zinc-400">A sample dashboard concept</p></div><span class="rounded-full border border-white/10 bg-white/[0.04] px-2 py-1 text-[9px] font-medium text-zinc-400">DEMO PREVIEW</span></div>
+          <div class="rounded-2xl border border-white/[0.06] bg-[#0D0B10] p-4">
+            <div class="flex items-end justify-between border-b border-white/[0.07] pb-4">
+              <div><p class="text-[10px] text-zinc-500">Balance · demo value</p><p class="mt-1 text-2xl font-extrabold text-white">$1,240.00</p></div>
+              <button onclick="showToast('Withdraw is a visual demo; no money moves.')" class="rounded-lg bg-pink-gradient px-4 py-2 text-[10px] font-bold text-white">Withdraw</button>
+            </div>
+            <div class="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+              <div class="rounded-xl border border-white/[0.06] bg-white/[0.025] p-3"><p class="text-[10px] text-zinc-500">Subscriptions</p><p class="mt-1 text-sm font-bold text-white">$820 <span class="text-[9px] font-normal text-zinc-500">demo</span></p></div>
+              <div class="rounded-xl border border-white/[0.06] bg-white/[0.025] p-3"><p class="text-[10px] text-zinc-500">Tips</p><p class="mt-1 text-sm font-bold text-white">$185 <span class="text-[9px] font-normal text-zinc-500">demo</span></p></div>
+              <div class="rounded-xl border border-white/[0.06] bg-white/[0.025] p-3"><p class="text-[10px] text-zinc-500">Premium Content</p><p class="mt-1 text-sm font-bold text-white">$235 <span class="text-[9px] font-normal text-zinc-500">demo</span></p></div>
+              <div class="rounded-xl border border-white/[0.06] bg-white/[0.025] p-3"><p class="text-[10px] text-zinc-500">Live</p><p class="mt-1 text-sm font-bold text-white">12 sessions <span class="text-[9px] font-normal text-zinc-500">demo</span></p></div>
+            </div>
+          </div>
+          <p class="mt-3 text-[10px] leading-relaxed text-zinc-500">All figures and controls are fictional interface examples. No payments, earnings, subscriptions, or withdrawals are processed.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 11. Safety -->
+    <section id="safety" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="overflow-hidden rounded-[28px] border border-[#FF3E7F]/15 bg-gradient-to-br from-[#1E111A] via-[#141118] to-[#11101A] p-6 sm:p-9 lg:p-10">
+        <div class="grid items-start gap-8 lg:grid-cols-12">
+          <div class="lg:col-span-4">
+            <span class="inline-flex rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-[10px] font-semibold text-emerald-200">SAFETY FIRST</span>
+            <h2 class="mt-4 text-2xl font-bold tracking-tight text-white sm:text-3xl">Connection should feel good—and safe.</h2>
+            <p class="mt-3 text-sm leading-relaxed text-zinc-400">Meet &amp; Connect is being designed with safety and user control in mind. The tools below are planned product features, not claims that live systems are already operating.</p>
+            <p class="mt-4 text-xs leading-relaxed text-zinc-300">Safety is a priority. Report, block, and moderation tools should be available throughout the platform.</p>
+          </div>
+          <div class="grid gap-3 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-3">
+            <div class="rounded-2xl border border-white/[0.07] bg-black/20 p-4"><span class="text-lg text-[#FF6B8B]">◇</span><h3 class="mt-2 text-sm font-bold text-white">Verified Profiles</h3><p class="mt-1 text-xs leading-relaxed text-zinc-400">A profile authenticity feature planned for development.</p></div>
+            <div class="rounded-2xl border border-white/[0.07] bg-black/20 p-4"><span class="text-lg text-[#FF6B8B]">⊘</span><h3 class="mt-2 text-sm font-bold text-white">Report &amp; Block</h3><p class="mt-1 text-xs leading-relaxed text-zinc-400">User controls intended to help manage unwanted contact.</p></div>
+            <div class="rounded-2xl border border-white/[0.07] bg-black/20 p-4"><span class="text-lg text-[#FF6B8B]">◉</span><h3 class="mt-2 text-sm font-bold text-white">Privacy Controls</h3><p class="mt-1 text-xs leading-relaxed text-zinc-400">Planned settings for profile visibility and interactions.</p></div>
+            <div class="rounded-2xl border border-white/[0.07] bg-black/20 p-4"><span class="text-lg text-[#FF6B8B]">⌁</span><h3 class="mt-2 text-sm font-bold text-white">Secure Messaging</h3><p class="mt-1 text-xs leading-relaxed text-zinc-400">Private messaging is a product goal; no messaging backend exists in this demo.</p></div>
+            <div class="rounded-2xl border border-white/[0.07] bg-black/20 p-4"><span class="text-lg text-[#FF6B8B]">18+</span><h3 class="mt-2 text-sm font-bold text-white">Age Protection</h3><p class="mt-1 text-xs leading-relaxed text-zinc-400">The platform is intended for adults aged 18 and over.</p></div>
+            <div class="rounded-2xl border border-white/[0.07] bg-black/20 p-4"><span class="text-lg text-[#FF6B8B]">♡</span><h3 class="mt-2 text-sm font-bold text-white">Community Guidelines</h3><p class="mt-1 text-xs leading-relaxed text-zinc-400">Clear standards and moderation are planned as core platform needs.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. CTA -->
+    <section class="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
+      <div class="flex flex-col items-center justify-between gap-6 rounded-3xl border border-[#FF3E7F]/20 bg-gradient-to-r from-[#21121D] to-[#15121A] p-6 text-center shadow-xl sm:p-9 md:flex-row md:text-left">
+        <div>
+          <h2 class="text-2xl font-bold tracking-tight text-white sm:text-3xl">Ready to Meet &amp; Connect?</h2>
+          <p class="mt-2 max-w-xl text-sm text-zinc-400">Create your profile, discover interesting people, and start connecting today.</p>
+        </div>
+        <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+          <button onclick="openModal('signupModal')" class="min-h-12 rounded-xl bg-pink-gradient px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#FF3E7F]/20">Get Started for Free</button>
+          <a href="#discover" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/10 bg-[#141118] px-6 py-3 text-sm font-semibold text-white hover:border-[#FF3E7F]/50">Explore Discover</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 13. Footer -->
+  <footer class="mt-10 border-t border-white/[0.06] bg-[#070609]">
+    <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 gap-9 md:grid-cols-3 lg:grid-cols-6">
+        <div class="col-span-2 space-y-3 lg:col-span-2">
+          <a href="#top" class="flex items-center gap-3">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl border border-[#FF3E7F]/30 bg-[#1A1218] text-[#FF3E7F]">
+              <svg class="h-6 w-6" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 26.5S5 19.4 5 11.6C5 8.1 7.7 5.5 11 5.5c2.2 0 4.1 1.2 5 3 .9-1.8 2.8-3 5-3 3.3 0 6 2.6 6 6.1 0 7.8-11 14.9-11 14.9Z" stroke="#FF3E7F" stroke-width="2.3"/><path d="M9.5 16h4l2-3 2 6 2-3h3" stroke="#FF7597" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <span><span class="block text-base font-bold text-white">Meet <span class="text-[#FF3E7F]">&amp;</span> Connect</span><span class="block text-[11px] text-zinc-500">Meet. Connect. Experience More.</span></span>
+          </a>
+          <p class="max-w-xs pt-1 text-xs leading-relaxed text-zinc-500">A global social platform concept for meeting people, connecting, and discovering creator communities.</p>
+          <div class="flex gap-2 pt-1">
+            <a href="#footer" aria-label="Social media placeholder" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[#141118] text-xs font-bold text-zinc-300 hover:border-[#FF3E7F] hover:text-[#FF3E7F]">X</a>
+            <a href="#footer" aria-label="Social media placeholder" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[#141118] text-xs font-bold text-zinc-300 hover:border-[#FF3E7F] hover:text-[#FF3E7F]">◎</a>
+            <a href="#footer" aria-label="Social media placeholder" class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[#141118] text-xs font-bold text-zinc-300 hover:border-[#FF3E7F] hover:text-[#FF3E7F]">▶</a>
+          </div>
+        </div>
+        <div><h3 class="text-xs font-bold uppercase tracking-wider text-white">Platform</h3><ul class="mt-3 space-y-2.5 text-xs text-zinc-400"><li><a href="#discover" class="hover:text-[#FF3E7F]">Discover</a></li><li><a href="#dating" class="hover:text-[#FF3E7F]">Dating</a></li><li><a href="#live" class="hover:text-[#FF3E7F]">Live</a></li><li><a href="#premium" class="hover:text-[#FF3E7F]">Premium</a></li><li><a href="#features" class="hover:text-[#FF3E7F]">Features</a></li></ul></div>
+        <div><h3 class="text-xs font-bold uppercase tracking-wider text-white">Community</h3><ul class="mt-3 space-y-2.5 text-xs text-zinc-400"><li><a href="#safety" class="hover:text-[#FF3E7F]">Safety Center</a></li><li><a href="#safety" class="hover:text-[#FF3E7F]">Community Guidelines</a></li><li><a href="#safety" class="hover:text-[#FF3E7F]">Help Center</a></li><li><a href="#safety" class="hover:text-[#FF3E7F]">Report a Problem</a></li></ul></div>
+        <div><h3 class="text-xs font-bold uppercase tracking-wider text-white">Company</h3><ul class="mt-3 space-y-2.5 text-xs text-zinc-400"><li><a href="#top" class="hover:text-[#FF3E7F]">About Us</a></li><li><a href="mailto:hello@meetandconnect.example" class="hover:text-[#FF3E7F]">Contact</a></li><li><a href="#top" class="hover:text-[#FF3E7F]">Careers</a></li><li><a href="#top" class="hover:text-[#FF3E7F]">Press</a></li></ul></div>
+        <div><h3 class="text-xs font-bold uppercase tracking-wider text-white">Legal</h3><ul class="mt-3 space-y-2.5 text-xs text-zinc-400"><li><a href="#footer" class="hover:text-[#FF3E7F]">Terms of Service</a></li><li><a href="#footer" class="hover:text-[#FF3E7F]">Privacy Policy</a></li><li><a href="#footer" class="hover:text-[#FF3E7F]">Cookie Policy</a></li><li><a href="#footer" class="hover:text-[#FF3E7F]">Copyright / DMCA</a></li></ul></div>
+      </div>
+      <div id="footer" class="mt-9 grid gap-4 border-t border-white/[0.07] pt-6 sm:grid-cols-2">
+        <div class="rounded-xl border border-[#FF3E7F]/15 bg-[#FF3E7F]/[0.04] p-4">
+          <p class="text-xs font-bold text-white">18+ Only</p>
+          <p class="mt-1 text-[11px] leading-relaxed text-zinc-400">Users must meet the minimum legal age requirements applicable to use the platform and its features.</p>
+        </div>
+        <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
+          <p class="text-xs font-bold text-white">Safety is a priority</p>
+          <p class="mt-1 text-[11px] leading-relaxed text-zinc-400">Report, block, and moderation tools should be available throughout the platform. This prototype does not include operational safety systems.</p>
+        </div>
+      </div>
+      <p class="mt-6 text-center text-[10px] text-zinc-600">© 2026 Meet &amp; Connect. Product concept preview.</p>
+    </div>
+  </footer>
+
+  <!-- 14. Login modal -->
+  <div id="loginModal" class="modal fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto p-4 modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="relative my-auto w-full max-w-md rounded-3xl border border-white/10 bg-[#141118] p-6 shadow-2xl sm:p-8">
+      <button onclick="closeModal('loginModal')" class="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white" aria-label="Close login">✕</button>
+      <span class="inline-flex rounded-full bg-[#FF3E7F]/10 px-3 py-1 text-[10px] font-semibold text-[#FF6B8B]">WELCOME BACK</span>
+      <h2 id="loginTitle" class="mt-3 text-2xl font-bold text-white">Welcome Back</h2>
+      <p class="mt-1 text-sm text-zinc-400">Log in to your Meet &amp; Connect account.</p>
+      <form class="demo-form mt-6 space-y-4" data-success="Login preview ready. No account was accessed.">
+        <label class="block text-xs font-medium text-zinc-300">Email<input type="email" required autocomplete="email" placeholder="you@example.com" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <label class="block text-xs font-medium text-zinc-300">Password<input type="password" required autocomplete="current-password" placeholder="Enter your password" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <div class="flex items-center justify-between text-xs"><button type="button" onclick="showToast('Password recovery is not available in this prototype.')" class="text-[#FF6B8B] hover:text-white">Forgot password?</button><span class="text-zinc-500">Demo only</span></div>
+        <button type="submit" class="w-full rounded-xl bg-pink-gradient py-3 text-sm font-semibold text-white">Log In</button>
+        <button type="button" onclick="showToast('Google sign-in is not connected in this prototype.')" class="w-full rounded-xl border border-white/10 bg-white/[0.03] py-3 text-sm font-semibold text-white hover:bg-white/[0.06]">Continue with Google</button>
+      </form>
+      <p class="mt-5 text-center text-xs text-zinc-400">New here? <button onclick="closeModal('loginModal'); openModal('signupModal')" class="font-semibold text-[#FF6B8B] hover:text-white">Create an account</button></p>
+    </div>
+  </div>
+
+  <!-- 15. Sign-up modal -->
+  <div id="signupModal" class="modal fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto p-4 modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="signupTitle">
+    <div class="relative my-auto w-full max-w-lg rounded-3xl border border-white/10 bg-[#141118] p-6 shadow-2xl sm:p-8">
+      <button onclick="closeModal('signupModal')" class="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white" aria-label="Close sign-up">✕</button>
+      <span class="inline-flex rounded-full bg-[#FF3E7F]/10 px-3 py-1 text-[10px] font-semibold text-[#FF6B8B]">YOUR NEXT CONNECTION STARTS HERE</span>
+      <h2 id="signupTitle" class="mt-3 text-2xl font-bold text-white">Create Your Meet &amp; Connect Account</h2>
+      <p class="mt-1 text-xs leading-relaxed text-zinc-400">This is a frontend-only preview. Your details are not sent or stored.</p>
+      <form class="demo-form mt-5 space-y-3.5" data-success="Account setup preview ready. No account was created.">
+        <label class="block text-xs font-medium text-zinc-300">First name<input type="text" required autocomplete="given-name" placeholder="Your first name" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <label class="block text-xs font-medium text-zinc-300">Email<input type="email" required autocomplete="email" placeholder="you@example.com" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <label class="block text-xs font-medium text-zinc-300">Password<input type="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /></label>
+        <label class="block text-xs font-medium text-zinc-300">Date of birth<input type="date" required autocomplete="bday" class="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09080B] px-4 py-3 text-sm text-white outline-none focus:border-[#FF3E7F]" /><span class="mt-1 block text-[10px] text-zinc-500">This platform is intended for adults aged 18 and over.</span></label>
+        <label class="flex items-start gap-2 text-[11px] leading-relaxed text-zinc-400"><input type="checkbox" required class="mt-0.5 accent-[#FF3E7F]" /><span>I agree to the <a href="#footer" class="text-[#FF6B8B] hover:text-white">Terms of Service</a> and <a href="#footer" class="text-[#FF6B8B] hover:text-white">Privacy Policy</a>.</span></label>
+        <button type="submit" class="w-full rounded-xl bg-pink-gradient py-3 text-sm font-semibold text-white">Create Account</button>
+        <button type="button" onclick="showToast('Google sign-up is not connected in this prototype.')" class="w-full rounded-xl border border-white/10 bg-white/[0.03] py-3 text-sm font-semibold text-white hover:bg-white/[0.06]">Continue with Google</button>
+      </form>
+      <p class="mt-5 text-center text-xs text-zinc-400">Already have an account? <button onclick="closeModal('signupModal'); openModal('loginModal')" class="font-semibold text-[#FF6B8B] hover:text-white">Log in</button></p>
+      <div class="success-message mt-4 hidden rounded-xl border border-emerald-400/20 bg-emerald-400/10 p-4 text-center text-sm text-emerald-200" role="status"></div>
+    </div>
+  </div>
+
+  <!-- 16. How It Works modal -->
+  <div id="howModal" class="modal fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto p-4 modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="howTitle">
+    <div class="relative my-auto w-full max-w-xl rounded-3xl border border-white/10 bg-[#141118] p-6 shadow-2xl sm:p-8">
+      <button onclick="closeModal('howModal')" class="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white" aria-label="Close how it works">✕</button>
+      <span class="inline-flex rounded-full bg-[#FF3E7F]/10 px-3 py-1 text-[10px] font-semibold text-[#FF6B8B]">A LITTLE MORE CONNECTION</span>
+      <h2 id="howTitle" class="mt-3 text-2xl font-bold text-white">How It Works</h2>
+      <p class="mt-1 text-sm text-zinc-400">A simple path from first hello to finding your community.</p>
+      <ol class="mt-6 space-y-3">
+        <li class="flex gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#FF3E7F]/15 text-sm font-bold text-[#FF6B8B]">1</span><span><b class="text-sm text-white">Create your profile</b><span class="mt-1 block text-xs text-zinc-400">Introduce yourself and choose how you want to connect.</span></span></li>
+        <li class="flex gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#FF3E7F]/15 text-sm font-bold text-[#FF6B8B]">2</span><span><b class="text-sm text-white">Discover people</b><span class="mt-1 block text-xs text-zinc-400">Explore profiles nearby or across the globe.</span></span></li>
+        <li class="flex gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#FF3E7F]/15 text-sm font-bold text-[#FF6B8B]">3</span><span><b class="text-sm text-white">Chat and connect</b><span class="mt-1 block text-xs text-zinc-400">Start conversations and connect by voice or video.</span></span></li>
+        <li class="flex gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#FF3E7F]/15 text-sm font-bold text-[#FF6B8B]">4</span><span><b class="text-sm text-white">Follow creators</b><span class="mt-1 block text-xs text-zinc-400">Keep up with creators and communities you enjoy.</span></span></li>
+        <li class="flex gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#FF3E7F]/15 text-sm font-bold text-[#FF6B8B]">5</span><span><b class="text-sm text-white">Join live streams</b><span class="mt-1 block text-xs text-zinc-400">Watch, react, and participate in real-time experiences.</span></span></li>
+        <li class="flex gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#FF3E7F]/15 text-sm font-bold text-[#FF6B8B]">6</span><span><b class="text-sm text-white">Explore premium content</b><span class="mt-1 block text-xs text-zinc-400">Discover creator content with clear access choices.</span></span></li>
+      </ol>
+      <p class="mt-4 text-[10px] leading-relaxed text-zinc-500">These are planned experiences shown as a product concept. This page does not create profiles, send messages, stream video, or process payments.</p>
+      <button onclick="closeModal('howModal'); openModal('signupModal')" class="mt-5 w-full rounded-xl bg-pink-gradient py-3 text-sm font-semibold text-white">Get Started</button>
+    </div>
+  </div>
+
+  <!-- 17. JavaScript interactions -->
+  <div id="toast" class="pointer-events-none fixed bottom-5 left-1/2 z-[70] hidden -translate-x-1/2 rounded-xl border border-white/10 bg-[#201923] px-4 py-3 text-center text-xs text-white shadow-2xl" role="status" aria-live="polite"></div>
+  <script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuButton.addEventListener('click', () => {
+      const isOpening = mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden');
+      mobileMenuButton.setAttribute('aria-expanded', String(isOpening));
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    const languageOptions = ['English', 'Español', 'Français', 'Deutsch'];
+    let languageIndex = 0;
+    document.getElementById('languageButton').addEventListener('click', () => {
+      languageIndex = (languageIndex + 1) % languageOptions.length;
+      document.getElementById('languageLabel').textContent = languageOptions[languageIndex];
+      showToast('Language selector preview only.');
+    });
+
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      const firstInput = modal.querySelector('input');
+      if (firstInput) setTimeout(() => firstInput.focus(), 50);
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      if (!document.querySelector('.modal.flex')) document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', event => {
+        if (event.target === modal) closeModal(modal.id);
+      });
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('.modal.flex').forEach(modal => closeModal(modal.id));
+      }
+    });
+
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.add('hidden'), 2800);
+    }
+
+    document.querySelectorAll('.demo-form').forEach(form => {
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+        const successText = form.dataset.success || 'Preview ready.';
+        form.reset();
+        if (form.closest('#signupModal')) {
+          form.classList.add('hidden');
+          const success = form.closest('#signupModal').querySelector('.success-message');
+          success.textContent = successText;
+          success.classList.remove('hidden');
+        } else {
+          showToast(successText);
+          closeModal('loginModal');
+        }
+      });
+    });
+
+    document.getElementById('signupModal').addEventListener('click', event => {
+      if (event.target === event.currentTarget) closeModal('signupModal');
+    });
+  </script>
+</body>
+</html>
